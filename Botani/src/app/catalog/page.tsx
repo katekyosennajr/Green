@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default async function CatalogPage({
     searchParams,
 }: {
-    searchParams: Promise<{ type?: string }>;
+    searchParams: Promise<{ type?: string; search?: string }>;
 }) {
     const { type, search } = await searchParams;
     const categoryFilter = type === 'wholesale' ? 'Wholesale' : 'Retail';

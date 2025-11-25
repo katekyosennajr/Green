@@ -518,6 +518,15 @@ img {
   padding: 0.5rem 0;
 }
 
+.search-suggestions-header {
+  padding: 0.5rem 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 .search-suggestion-item {
   display: flex;
   align-items: center;

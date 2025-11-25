@@ -152,7 +152,7 @@ export default function Navbar() {
                             {/* Suggestions List */}
                             {suggestions.length > 0 && (
                                 <div className="search-suggestions-list">
-                                    <div className="px-6 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    <div className="search-suggestions-header">
                                         Suggested Plants
                                     </div>
                                     {suggestions.map((suggestion) => (
