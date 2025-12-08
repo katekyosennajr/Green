@@ -3,6 +3,7 @@
 import { useCart } from '@/components/cart-provider';
 import Link from 'next/link';
 import { Trash2, ArrowRight, ShieldCheck } from 'lucide-react';
+import { CheckoutForm } from '@/components/checkout-form';
 
 export default function CartPage() {
     const { items, removeItem, cartTotal, cartCount } = useCart();
@@ -88,10 +89,10 @@ export default function CartPage() {
                                 Secure Checkout via Stripe / PayPal
                             </p>
 
-                            <button className="w-full bg-green-900 text-white py-4 rounded-full font-bold hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group">
-                                Proceed to Checkout
-                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                            </button>
+                            <div className="mt-6 pt-6 border-t border-green-50">
+                                <h4 className="font-bold text-green-900 mb-4">Express Checkout</h4>
+                                <CheckoutForm />
+                            </div>
 
                             <p className="text-center mt-4 text-xs text-green-400">
                                 *Shipping costs will be finalized based on your address.
