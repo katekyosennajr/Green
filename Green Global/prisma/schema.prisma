@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  password  String
+  role      String   @default("USER") // USER, ADMIN
+  orders    Order[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id              String   @id @default(uuid())
+  name            String
+  scientificName  String?
+  slug            String   @unique
+  description     String
+  priceUsd        Float
+  priceIdr        Float?
+  stock           Int      @default(0)
+  images          String   // JSON string or comma-separated URLs
+  category        String?
+  isFeatured      Boolean  @default(false)
+  shippingInfo    String?  @default("Bare root with sphagnum moss")
+  phytoIncluded   Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  orderItems      OrderItem[]
+}
+
+model Order {
+  id              String      @id @default(uuid())
+  userId          String?
+  user            User?       @relation(fields: [userId], references: [id])
+  guestEmail      String?
+  totalUsd        Float
+  status          String      @default("PENDING") // PENDING, PROCESSING, PHYTO_IN_PROGRESS, SHIPPED, DELIVERED
+  paymentStatus   String      @default("UNPAID")
+  trackingNumber  String?
+  phytoCertNumber String?
+  items           OrderItem[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  productId String
+  quantity  Int
+  priceUsd  Float
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Content {
+    id      String @id @default(uuid())
+    key     String @unique
+    value   String // Markdown or HTML content
+}
