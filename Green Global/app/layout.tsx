@@ -22,6 +22,8 @@ export const metadata: Metadata = {
   description: "Verified exporter of rare Scindapsus and Aroids from Indonesia to the world. Phytosanitary certified.",
 };
 
+import { CartProvider } from "@/components/cart-provider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,11 +32,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn(inter.variable, playfair.variable)}>
       <body className="antialiased min-h-screen flex flex-col bg-cream-50 font-sans">
-        <SiteHeader />
-        <main className="flex-1 flex flex-col">
-          {children}
-        </main>
-        <SiteFooter />
+        <CartProvider>
+          <SiteHeader />
+          <main className="flex-1 flex flex-col">
+            {children}
+          </main>
+          <SiteFooter />
+        </CartProvider>
       </body>
     </html>
   );

@@ -4,9 +4,11 @@ import Link from 'next/link';
 import { ShoppingCart, Menu, Search, Phone } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { useCart } from '@/components/cart-provider';
 
 export function SiteHeader() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { cartCount } = useCart();
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-green-100 bg-cream-50/80 backdrop-blur-md">
@@ -49,12 +51,14 @@ export function SiteHeader() {
                         B2B Quote
                     </Link>
 
-                    <button className="relative p-2 hover:bg-green-100 rounded-full transition-colors">
+                    <Link href="/cart" className="relative p-2 hover:bg-green-100 rounded-full transition-colors">
                         <ShoppingCart className="w-5 h-5 text-green-900" />
-                        <span className="absolute top-0 right-0 h-4 w-4 bg-gold-500 rounded-full text-[10px] flex items-center justify-center text-white font-bold">
-                            0
-                        </span>
-                    </button>
+                        {cartCount > 0 && (
+                            <span className="absolute top-0 right-0 h-4 w-4 bg-gold-500 rounded-full text-[10px] flex items-center justify-center text-white font-bold">
+                                {cartCount}
+                            </span>
+                        )}
+                    </Link>
 
                     <button
                         className="md:hidden p-2 text-green-900"

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { ProductGallery } from '@/components/product-gallery';
 import { ExportInfoTabs } from '@/components/export-info-tabs';
 import { ShieldCheck, Check } from 'lucide-react';
+import { AddToCartButton } from '@/components/add-to-cart-button';
 
 const prisma = new PrismaClient();
 
@@ -57,9 +58,13 @@ export default async function ProductPage({ params }: { params: { slug: string }
                         </div>
 
                         <div className="space-y-4">
-                            <button className="w-full bg-green-800 hover:bg-green-900 text-white text-lg font-bold py-4 rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2">
-                                Add to Cart
-                            </button>
+                            <AddToCartButton product={{
+                                id: product.id,
+                                name: product.name,
+                                priceUsd: product.priceUsd,
+                                images: product.images as string,
+                                slug: product.slug
+                            }} />
                             <button className="w-full bg-transparent border-2 border-green-800 text-green-800 hover:bg-green-50 font-bold py-4 rounded-full transition-all">
                                 Request B2B / Wholesale Quote
                             </button>
