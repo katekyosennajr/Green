@@ -32,4 +32,21 @@ main()
         console.error(e)
         await prisma.$disconnect()
         process.exit(1)
+        // Seed Admin User
+        const adminEmail = 'admin@globalgreen.com';
+        const existingAdmin = await prisma.user.findUnique({ where: { email: adminEmail } });
+
+        if (!existingAdmin) {
+            await prisma.user.create({
+                data: {
+                    email: adminEmail,
+                    name: 'Admin User',
+                    password: 'admin123', // In real app, hash this!
+                    role: 'ADMIN'
+                }
+            });
+            console.log('Admin user created');
+        }
+
+        console.log('Seeding finished.');
     })

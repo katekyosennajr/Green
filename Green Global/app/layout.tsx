@@ -23,6 +23,7 @@ export const metadata: Metadata = {
 };
 
 import { CartProvider } from "@/components/cart-provider";
+import { AuthProvider } from "@/components/auth-provider";
 
 export default function RootLayout({
   children,
@@ -32,13 +33,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn(inter.variable, playfair.variable)}>
       <body className="antialiased min-h-screen flex flex-col bg-cream-50 font-sans">
-        <CartProvider>
-          <SiteHeader />
-          <main className="flex-1 flex flex-col">
-            {children}
-          </main>
-          <SiteFooter />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <SiteHeader />
+            <main className="flex-1 flex flex-col">
+              {children}
+            </main>
+            <SiteFooter />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );
