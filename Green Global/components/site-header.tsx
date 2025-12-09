@@ -88,6 +88,23 @@ export function SiteHeader() {
                     <Link href="/catalog" className="block text-green-900 font-medium">Catalog</Link>
                     <Link href="/about" className="block text-green-900 font-medium">About</Link>
                     <Link href="/contact" className="block text-gold-600 font-bold">Request Quote</Link>
+                    <div className="flex items-center space-x-4 pt-4 border-t border-green-50">
+                        <span className="text-sm font-bold text-green-800 uppercase tracking-widest">Currency:</span>
+                        <div className="flex space-x-2">
+                            <button
+                                onClick={() => setCurrency('USD')}
+                                className={cn("px-3 py-1 rounded-full text-xs font-bold transition-all", currency === 'USD' ? "bg-green-900 text-white" : "bg-green-100 text-green-800")}
+                            >
+                                USD
+                            </button>
+                            <button
+                                onClick={() => setCurrency('IDR')}
+                                className={cn("px-3 py-1 rounded-full text-xs font-bold transition-all", currency === 'IDR' ? "bg-green-900 text-white" : "bg-green-100 text-green-800")}
+                            >
+                                IDR
+                            </button>
+                        </div>
+                    </div>
                 </div>
             )}
         </header>
