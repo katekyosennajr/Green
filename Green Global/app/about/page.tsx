@@ -9,7 +9,7 @@ export default function AboutPage() {
                 <div className="container mx-auto px-4 text-center max-w-3xl">
                     <h1 className="font-serif text-4xl md:text-5xl font-bold mb-6">Cultivating Trust, Exporting Nature</h1>
                     <p className="text-xl text-green-100 leading-relaxed">
-                        GlobalGreen Exporter is Borneo's premier licensed nursery, dedicated to sharing Indonesia's botanical treasures with the world's most discerning collectors.
+                        GlobalGreen Exporter is Borneo&apos;s premier licensed nursery, dedicated to sharing Indonesia&apos;s botanical treasures with the world&apos;s most discerning collectors.
                     </p>
                 </div>
             </section>

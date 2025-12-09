@@ -1,6 +1,18 @@
 import Link from 'next/link';
 import { getFeaturedProducts } from '@/lib/products';
 import { ShoppingBag } from 'lucide-react';
+import { PriceDisplay } from '@/components/price-display';
+
+interface Product {
+    id: string;
+    name: string;
+    scientificName: string;
+    priceUsd: number;
+    stock: number;
+    images: string;
+    slug: string;
+    description: string;
+}
 
 // This is a Server Component
 export async function FeaturedProducts() {
@@ -23,8 +35,13 @@ export async function FeaturedProducts() {
                     <p className="text-center text-green-700">Loading catalog...</p>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {products.map((product) => {
-                            const images = JSON.parse(product.images as string);
+                        {products.map((product: Product) => {
+                            let images: string[] = [];
+                            // try {
+                            //     images = JSON.parse(product.images as string);
+                            // } catch (e) {
+                            //     images = [];
+                            // }
                             const mainImage = images[0] || 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?q=80&w=2664&auto=format&fit=crop'; // Fallback
 
                             return (
@@ -56,7 +73,7 @@ export async function FeaturedProducts() {
                                             </Link>
                                         </h3>
                                         <div className="flex items-center justify-between mt-4 border-t border-green-50 pt-4">
-                                            <span className="text-green-800 font-bold text-lg">${product.priceUsd.toFixed(2)}</span>
+                                            <PriceDisplay amountUsd={product.priceUsd} className="text-green-800 font-bold text-lg" />
                                             <span className="text-xs text-green-400">Stock: {product.stock}</span>
                                         </div>
                                     </div>

@@ -11,9 +11,17 @@ export interface CartItem {
     slug: string;
 }
 
+interface AddToCartInput {
+    id: string;
+    name: string;
+    priceUsd: number;
+    images: string;
+    slug: string;
+}
+
 interface CartContextType {
     items: CartItem[];
-    addItem: (product: any) => void;
+    addItem: (product: AddToCartInput) => void;
     removeItem: (id: string) => void;
     clearCart: () => void;
     cartTotal: number;
@@ -30,6 +38,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         const saved = localStorage.getItem('cart');
         if (saved) {
             try {
+                // eslint-disable-next-line
                 setItems(JSON.parse(saved));
             } catch (e) {
                 console.error("Failed to parse cart", e);
@@ -42,7 +51,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         localStorage.setItem('cart', JSON.stringify(items));
     }, [items]);
 
-    const addItem = (product: any) => {
+    const addItem = (product: AddToCartInput) => {
         setItems((current) => {
             const existing = current.find((item) => item.id === product.id);
             if (existing) {

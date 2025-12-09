@@ -2,8 +2,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { LayoutDashboard, Package, Users, ShoppingBag, Settings, LogOut } from 'lucide-react';
-import { LogoutButton } from "@/components/logout-button";
+import { LayoutDashboard, Package, Users, ShoppingBag, Settings } from 'lucide-react';
+import { LogoutButton } from "../../components/logout-button";
 
 export default async function AdminLayout({
     children,
@@ -12,7 +12,7 @@ export default async function AdminLayout({
 }) {
     const session = await getServerSession(authOptions);
 
-    if (!session?.user || (session.user as any).role !== 'ADMIN') {
+    if (!session?.user || session.user.role !== 'ADMIN') {
         redirect('/login');
     }
 

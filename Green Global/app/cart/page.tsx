@@ -1,24 +1,29 @@
 'use client';
 
 import { useCart } from '@/components/cart-provider';
+import { useCurrency } from '@/components/currency-provider';
 import Link from 'next/link';
-import { Trash2, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Trash2, ShieldCheck } from 'lucide-react';
 import { CheckoutForm } from '@/components/checkout-form';
 
 export default function CartPage() {
     const { items, removeItem, cartTotal, cartCount } = useCart();
+    const { formatPrice } = useCurrency();
 
     if (cartCount === 0) {
         return (
             <div className="min-h-[60vh] flex flex-col items-center justify-center bg-cream-50 px-4">
                 <h1 className="font-serif text-3xl text-green-900 mb-4">Your Cart is Empty</h1>
-                <p className="text-green-600 mb-8">Looks like you haven't added any rare plants yet.</p>
+                <p className="text-green-600 mb-8">Looks like you haven&apos;t added any rare plants yet.</p>
                 <Link href="/catalog" className="bg-green-900 text-white px-8 py-3 rounded-full font-bold hover:bg-gold-600 transition-colors">
                     Browse Catalog
                 </Link>
             </div>
         )
     }
+
+    const SHIPPING_COST_USD = 150;
+    const finalTotal = cartTotal + SHIPPING_COST_USD;
 
     return (
         <div className="bg-cream-50 min-h-screen py-12">
@@ -40,14 +45,14 @@ export default function CartPage() {
                                             {item.name}
                                         </Link>
                                     </h3>
-                                    <p className="text-green-500 text-sm mt-1">${item.price.toFixed(2)}</p>
+                                    <p className="text-green-500 text-sm mt-1">{formatPrice(item.price)}</p>
                                 </div>
-                                < div className="text-center">
+                                <div className="text-center">
                                     <span className="text-xs text-green-400 block mb-1">Qty</span>
                                     <span className="font-bold text-green-800">{item.quantity}</span>
                                 </div>
                                 <div className="text-right min-w-[80px]">
-                                    <p className="font-bold text-green-900">${(item.price * item.quantity).toFixed(2)}</p>
+                                    <p className="font-bold text-green-900">{formatPrice(item.price * item.quantity)}</p>
                                 </div>
                                 <button
                                     onClick={() => removeItem(item.id)}
@@ -67,21 +72,21 @@ export default function CartPage() {
                             <div className="space-y-4 text-sm text-green-700 border-b border-green-50 pb-6 mb-6">
                                 <div className="flex justify-between">
                                     <span>Subtotal</span>
-                                    <span className="font-bold">${cartTotal.toFixed(2)}</span>
+                                    <span className="font-bold">{formatPrice(cartTotal)}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span>Phytosanitary Cert</span>
                                     <span className="text-gold-600 font-bold">FREE</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span>Shipping (Est.)</span>
-                                    <span className="text-green-400">Calculated at Link</span>
+                                    <span>Shipping (Flat Rate)</span>
+                                    <span className="text-green-900 font-medium">{formatPrice(SHIPPING_COST_USD)}</span>
                                 </div>
                             </div>
 
                             <div className="flex justify-between text-lg font-bold text-green-900 mb-8">
-                                <span>Total (USD)</span>
-                                <span>${cartTotal.toFixed(2)}</span>
+                                <span>Total ({formatPrice(finalTotal).includes('IDR') ? 'IDR' : 'USD'})</span>
+                                <span>{formatPrice(finalTotal)}</span>
                             </div>
 
                             <p className="text-xs text-green-500 mb-4 flex items-center gap-2">
@@ -91,7 +96,7 @@ export default function CartPage() {
 
                             <div className="mt-6 pt-6 border-t border-green-50">
                                 <h4 className="font-bold text-green-900 mb-4">Express Checkout</h4>
-                                <CheckoutForm />
+                                <CheckoutForm totalAmount={finalTotal} />
                             </div>
 
                             <p className="text-center mt-4 text-xs text-green-400">

@@ -1,14 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { ShoppingCart, Menu, Search, Phone } from 'lucide-react';
+import { ShoppingCart, Menu, Phone } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/components/cart-provider';
+import { useCurrency } from '@/components/currency-provider';
 
 export function SiteHeader() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { cartCount } = useCart();
+    const { currency, setCurrency } = useCurrency();
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-green-100 bg-cream-50/80 backdrop-blur-md">
@@ -37,10 +39,21 @@ export function SiteHeader() {
                 <div className="flex items-center space-x-4">
 
                     {/* Currency / Lang (Mock) */}
+                    {/* Currency / Lang */}
                     <div className="hidden md:flex text-xs font-semibold border-r border-green-200 pr-4 space-x-2">
-                        <button className="text-green-800">USD</button>
+                        <button
+                            onClick={() => setCurrency('USD')}
+                            className={cn("transition-colors", currency === 'USD' ? "text-green-800 font-bold" : "text-green-400 font-normal")}
+                        >
+                            USD
+                        </button>
                         <span className="text-green-300">|</span>
-                        <button className="text-green-400">IDR</button>
+                        <button
+                            onClick={() => setCurrency('IDR')}
+                            className={cn("transition-colors", currency === 'IDR' ? "text-green-800 font-bold" : "text-green-400 font-normal")}
+                        >
+                            IDR
+                        </button>
                     </div>
 
                     <Link

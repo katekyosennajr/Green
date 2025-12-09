@@ -5,11 +5,16 @@ import { revalidatePath } from 'next/cache';
 
 const prisma = new PrismaClient();
 
-export async function createOrder(prevState: any, formData: FormData) {
+interface CartItem {
+    id: string;
+    name: string;
+    quantity: number;
+    price: number;
+}
+
+export async function createOrder(prevState: unknown, formData: FormData) {
     try {
-        const name = formData.get('name') as string;
         const email = formData.get('email') as string;
-        const address = formData.get('address') as string;
         const cartItemsJson = formData.get('cartItems') as string;
         const totalUsd = parseFloat(formData.get('total') as string);
 
@@ -17,7 +22,7 @@ export async function createOrder(prevState: any, formData: FormData) {
             return { message: 'Cart is empty', success: false };
         }
 
-        const cartItems = JSON.parse(cartItemsJson);
+        const cartItems: CartItem[] = JSON.parse(cartItemsJson);
 
         // Create the order
         const order = await prisma.order.create({
@@ -27,11 +32,10 @@ export async function createOrder(prevState: any, formData: FormData) {
                 guestEmail: email, // For now, we allow guest checkout
                 // If logged in, we would attach userId here
                 items: {
-                    create: cartItems.map((item: any) => ({
-                        productName: item.name,
+                    create: cartItems.map((item) => ({
                         productId: item.id,
                         quantity: item.quantity,
-                        priceAtTime: item.price
+                        priceUsd: item.price
                     }))
                 }
             }

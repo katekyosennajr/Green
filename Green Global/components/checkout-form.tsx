@@ -34,8 +34,12 @@ function SubmitButton() {
     );
 }
 
-export function CheckoutForm() {
-    const { items, cartTotal, clearCart } = useCart();
+interface CheckoutFormProps {
+    totalAmount: number;
+}
+
+export function CheckoutForm({ totalAmount }: CheckoutFormProps) {
+    const { items, clearCart } = useCart();
     const [state, formAction] = useFormState(createOrder, initialState);
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -67,7 +71,7 @@ export function CheckoutForm() {
             <h3 className="font-bold text-xl text-green-900 mb-6 border-b border-green-50 pb-4">Shipping Details</h3>
             <form action={formAction} ref={formRef} className="space-y-4">
                 <input type="hidden" name="cartItems" value={JSON.stringify(items)} />
-                <input type="hidden" name="total" value={cartTotal} />
+                <input type="hidden" name="totalUsd" value={totalAmount} />
 
                 <div>
                     <label className="block text-sm font-medium text-green-800 mb-1">Full Name</label>

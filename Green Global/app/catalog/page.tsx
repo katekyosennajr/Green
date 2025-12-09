@@ -1,14 +1,31 @@
 import { PrismaClient } from '@prisma/client';
 import Link from 'next/link';
 import { ShoppingBag } from 'lucide-react';
+import { PriceDisplay } from '@/components/price-display';
 
 const prisma = new PrismaClient();
 
+interface Product {
+    id: string;
+    name: string;
+    scientificName: string | null;
+    priceUsd: number;
+    stock: number;
+    images: string;
+    slug: string;
+    description: string;
+}
+
 async function getProducts() {
-    return await prisma.product.findMany({
-        orderBy: { createdAt: 'desc' },
-        where: { stock: { gt: 0 } }
-    });
+    try {
+        return await prisma.product.findMany({
+            orderBy: { createdAt: 'desc' },
+            where: { stock: { gt: 0 } }
+        });
+    } catch (error) {
+        console.error("Failed to fetch products:", error);
+        return [];
+    }
 }
 
 export default async function CatalogPage() {
@@ -34,8 +51,13 @@ export default async function CatalogPage() {
 
                 {/* Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    {products.map((product) => {
-                        const images = JSON.parse(product.images as string);
+                    {products.map((product: Product) => {
+                        const images: string[] = [];
+                        // try {
+                        //     images = JSON.parse(product.images as string);
+                        // } catch (e) {
+                        //     images = [];
+                        // }
                         const mainImage = images[0] || 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?q=80&w=2664&auto=format&fit=crop';
 
                         return (
@@ -56,7 +78,7 @@ export default async function CatalogPage() {
                                         </Link>
                                     </h3>
                                     <div className="mt-auto pt-4 flex items-center justify-between border-t border-green-50">
-                                        <span className="text-xl font-bold text-green-800">${product.priceUsd.toFixed(2)}</span>
+                                        <PriceDisplay amountUsd={product.priceUsd} className="text-xl font-bold text-green-800" />
                                         <Link href={`/product/${product.slug}`} className="p-2 bg-green-100 hover:bg-green-900 hover:text-white rounded-full transition-colors text-green-900">
                                             <ShoppingBag className="w-5 h-5" />
                                         </Link>

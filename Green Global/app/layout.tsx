@@ -25,6 +25,8 @@ export const metadata: Metadata = {
 import { CartProvider } from "@/components/cart-provider";
 import { AuthProvider } from "@/components/auth-provider";
 
+import { CurrencyProvider } from "@/components/currency-provider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -34,13 +36,15 @@ export default function RootLayout({
     <html lang="en" className={cn(inter.variable, playfair.variable)}>
       <body className="antialiased min-h-screen flex flex-col bg-cream-50 font-sans">
         <AuthProvider>
-          <CartProvider>
-            <SiteHeader />
-            <main className="flex-1 flex flex-col">
-              {children}
-            </main>
-            <SiteFooter />
-          </CartProvider>
+          <CurrencyProvider>
+            <CartProvider>
+              <SiteHeader />
+              <main className="flex-1 flex flex-col">
+                {children}
+              </main>
+              <SiteFooter />
+            </CartProvider>
+          </CurrencyProvider>
         </AuthProvider>
       </body>
     </html>
