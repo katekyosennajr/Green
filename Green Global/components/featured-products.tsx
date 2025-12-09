@@ -6,7 +6,7 @@ import { PriceDisplay } from '@/components/price-display';
 interface Product {
     id: string;
     name: string;
-    scientificName: string;
+    scientificName: string | null;
     priceUsd: number;
     stock: number;
     images: string;
@@ -36,7 +36,7 @@ export async function FeaturedProducts() {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {products.map((product: Product) => {
-                            let images: string[] = [];
+                            const images: string[] = [];
                             // try {
                             //     images = JSON.parse(product.images as string);
                             // } catch (e) {

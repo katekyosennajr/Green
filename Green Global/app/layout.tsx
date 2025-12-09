@@ -18,8 +18,41 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Global Green Exporter - Premium Rare Plants from Borneo",
-  description: "Verified exporter of rare Scindapsus and Aroids from Indonesia to the world. Phytosanitary certified.",
+  metadataBase: new URL('https://globalgreenexporter.com'), // Placeholder domain
+  title: {
+    default: "Global Green Exporter - Premium Rare Plants from Borneo",
+    template: "%s | Global Green Exporter"
+  },
+  description: "Verified exporter of rare Scindapsus and Aroids from Indonesia to the world. 100% Phytosanitary certified, genetic guarantee, and premium shipping.",
+  keywords: ["Rare Plants", "Scindapsus Borneo", "Aroid Exporter", "Indonesian Plants", "Wholesale Plants", "Phytosanitary Certified"],
+  authors: [{ name: "Global Green Team" }],
+  creator: "Global Green Exporter",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://globalgreenexporter.com",
+    title: "Global Green Exporter - Premium Rare Plants",
+    description: "Discover ethically sourced, rare botanical treasures from the heart of Borneo.",
+    siteName: "Global Green Exporter",
+    images: [
+      {
+        url: "/og-image.jpg", // Needs to be added or handled
+        width: 1200,
+        height: 630,
+        alt: "Global Green Exporter Hero",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Global Green Exporter",
+    description: "Premium rare plants from Borneo to your doorstep.",
+    images: ["/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  }
 };
 
 import { CartProvider } from "@/components/cart-provider";

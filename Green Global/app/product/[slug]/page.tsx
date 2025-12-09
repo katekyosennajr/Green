@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 import { ProductGallery } from '@/components/product-gallery';
 import { ExportInfoTabs } from '@/components/export-info-tabs';
 import { ShieldCheck, Check } from 'lucide-react';
@@ -12,6 +13,43 @@ async function getProduct(slug: string) {
     return await prisma.product.findUnique({
         where: { slug }
     });
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+    const product = await getProduct(params.slug);
+
+    if (!product) {
+        return {
+            title: 'Product Not Found',
+        };
+    }
+
+    let mainImage = '/og-image.jpg';
+    try {
+        const images = JSON.parse(product.images as string);
+        if (Array.isArray(images) && images.length > 0) {
+            mainImage = images[0];
+        }
+    } catch {
+        // Fallback to default
+    }
+
+    return {
+        title: product.name,
+        description: `${product.name} (${product.scientificName}). ${product.description.substring(0, 140)}...`,
+        openGraph: {
+            title: `${product.name} | Global Green Exporter`,
+            description: `Buy ${product.scientificName} directly from Indonesia. Phytosanitary certified.`,
+            images: [
+                {
+                    url: mainImage,
+                    width: 800,
+                    height: 600,
+                    alt: product.name,
+                }
+            ],
+        }
+    };
 }
 
 export default async function ProductPage({ params }: { params: { slug: string } }) {
