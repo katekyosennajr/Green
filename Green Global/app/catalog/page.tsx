@@ -1,9 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ShoppingBag } from 'lucide-react';
 import { PriceDisplay } from '@/components/price-display';
-
-const prisma = new PrismaClient();
+import { getProducts } from '@/lib/products';
 
 interface Product {
     id: string;
@@ -16,17 +15,7 @@ interface Product {
     description: string;
 }
 
-async function getProducts() {
-    try {
-        return await prisma.product.findMany({
-            orderBy: { createdAt: 'desc' },
-            where: { stock: { gt: 0 } }
-        });
-    } catch (error) {
-        console.error("Failed to fetch products:", error);
-        return [];
-    }
-}
+export const dynamic = 'force-dynamic';
 
 export default async function CatalogPage() {
     const products = await getProducts();
@@ -52,22 +41,23 @@ export default async function CatalogPage() {
                 {/* Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                     {products.map((product: Product) => {
-                        const images: string[] = [];
-                        // try {
-                        //     images = JSON.parse(product.images as string);
-                        // } catch (e) {
-                        //     images = [];
-                        // }
-                        const mainImage = images[0] || 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?q=80&w=2664&auto=format&fit=crop';
+                        let images: string[] = [];
+                        try {
+                            images = JSON.parse(product.images as string);
+                        } catch (e) {
+                            images = [];
+                        }
+                        const mainImage = images[0] || '/images/hero-bg.jpg';
 
                         return (
                             <div key={product.id} className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-green-50 flex flex-col">
                                 <div className="relative aspect-square overflow-hidden bg-green-100">
-                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img
+                                    <Image
                                         src={mainImage}
                                         alt={product.name}
-                                        className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        className="object-cover transform group-hover:scale-105 transition-transform duration-700"
                                     />
                                 </div>
                                 <div className="p-5 flex-1 flex flex-col">

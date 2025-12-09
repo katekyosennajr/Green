@@ -3,14 +3,17 @@
 import { useCart } from '@/components/cart-provider';
 import { useCurrency } from '@/components/currency-provider';
 import Link from 'next/link';
-import { Trash2, ShieldCheck } from 'lucide-react';
+import { Trash2, ShieldCheck, CheckCircle } from 'lucide-react';
 import { CheckoutForm } from '@/components/checkout-form';
+import { useState } from 'react';
 
 export default function CartPage() {
     const { items, removeItem, cartTotal, cartCount } = useCart();
-    const { formatPrice } = useCurrency();
+    const { formatPrice, currency } = useCurrency();
 
-    if (cartCount === 0) {
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    if (cartCount === 0 && !isSuccess) {
         return (
             <div className="min-h-[60vh] flex flex-col items-center justify-center bg-cream-50 px-4">
                 <h1 className="font-serif text-3xl text-green-900 mb-4">Your Cart is Empty</h1>
@@ -20,6 +23,22 @@ export default function CartPage() {
                 </Link>
             </div>
         )
+    }
+
+    if (isSuccess) {
+        return (
+            <div className="min-h-[60vh] flex flex-col items-center justify-center bg-green-50 px-4 animate-fade-in">
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                    <CheckCircle className="w-10 h-10 text-green-600" />
+                </div>
+                <h1 className="font-serif text-3xl md:text-4xl font-bold text-green-900 mb-4 text-center">Order Confirmed!</h1>
+                <p className="text-xl text-green-700 mb-2">Thank you for your purchase.</p>
+                <p className="text-green-600 mb-8">We will email you the phytosanitary details shortly.</p>
+                <Link href="/catalog" className="bg-green-900 text-white px-8 py-3 rounded-full font-bold hover:bg-gold-600 transition-colors">
+                    Continue Shopping
+                </Link>
+            </div>
+        );
     }
 
     const SHIPPING_COST_USD = 150;
@@ -85,7 +104,7 @@ export default function CartPage() {
                             </div>
 
                             <div className="flex justify-between text-lg font-bold text-green-900 mb-8">
-                                <span>Total ({formatPrice(finalTotal).includes('IDR') ? 'IDR' : 'USD'})</span>
+                                <span>Total ({currency})</span>
                                 <span>{formatPrice(finalTotal)}</span>
                             </div>
 
@@ -96,7 +115,7 @@ export default function CartPage() {
 
                             <div className="mt-6 pt-6 border-t border-green-50">
                                 <h4 className="font-bold text-green-900 mb-4">Express Checkout</h4>
-                                <CheckoutForm totalAmount={finalTotal} />
+                                <CheckoutForm totalAmount={finalTotal} onSuccess={() => setIsSuccess(true)} />
                             </div>
 
                             <p className="text-center mt-4 text-xs text-green-400">

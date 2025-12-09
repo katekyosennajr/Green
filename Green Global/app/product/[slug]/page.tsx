@@ -1,4 +1,3 @@
-import { PrismaClient } from '@prisma/client';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { ProductGallery } from '@/components/product-gallery';
@@ -6,17 +5,11 @@ import { ExportInfoTabs } from '@/components/export-info-tabs';
 import { ShieldCheck, Check } from 'lucide-react';
 import { AddToCartButton } from '@/components/add-to-cart-button';
 import { PriceDisplay } from '@/components/price-display';
+import { getProduct } from '@/lib/products';
 
-const prisma = new PrismaClient();
-
-async function getProduct(slug: string) {
-    return await prisma.product.findUnique({
-        where: { slug }
-    });
-}
-
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-    const product = await getProduct(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const resolvedParams = await params;
+    const product = await getProduct(resolvedParams.slug);
 
     if (!product) {
         return {
@@ -31,7 +24,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
             mainImage = images[0];
         }
     } catch {
-        // Fallback to default
+        // Fallback
     }
 
     return {
@@ -52,15 +45,25 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
 }
 
-export default async function ProductPage({ params }: { params: { slug: string } }) {
-    const product = await getProduct(params.slug);
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+    const resolvedParams = await params;
+    const product = await getProduct(resolvedParams.slug);
 
     if (!product) {
         notFound();
     }
 
-    // const images = JSON.parse(product.images as string);
-    const images: string[] = []; // Fallback due to build error
+    let images: string[] = [];
+    try {
+        images = JSON.parse(product.images as string);
+    } catch (e) {
+        console.error("Failed to parse product images", e);
+    }
+
+    // Ensure at least one image to prevent gallery crash
+    if (images.length === 0) {
+        images = ['https://images.unsplash.com/photo-1614594975525-e45190c55d0b?q=80&w=2664&auto=format&fit=crop'];
+    }
 
     return (
         <div className="bg-cream-50 min-h-screen py-12">

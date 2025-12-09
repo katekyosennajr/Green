@@ -36,9 +36,10 @@ function SubmitButton() {
 
 interface CheckoutFormProps {
     totalAmount: number;
+    onSuccess?: () => void;
 }
 
-export function CheckoutForm({ totalAmount }: CheckoutFormProps) {
+export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
     const { items, clearCart } = useCart();
     const [state, formAction] = useFormState(createOrder, initialState);
     const formRef = useRef<HTMLFormElement>(null);
@@ -47,8 +48,11 @@ export function CheckoutForm({ totalAmount }: CheckoutFormProps) {
         if (state.success) {
             clearCart();
             formRef.current?.reset();
+            if (onSuccess) {
+                onSuccess();
+            }
         }
-    }, [state.success, clearCart]);
+    }, [state.success, clearCart, onSuccess]);
 
     if (state.success) {
         return (

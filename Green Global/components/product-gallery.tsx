@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 interface ProductGalleryProps {
     images: string[];
@@ -24,8 +25,13 @@ export function ProductGallery({ images }: ProductGalleryProps) {
                             selectedindex === idx ? "border-gold-500 ring-2 ring-gold-200" : "border-transparent opacity-70 hover:opacity-100"
                         )}
                     >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={img} alt={`View ${idx + 1}`} className="w-full h-full object-cover" />
+                        <Image
+                            src={img}
+                            alt={`View ${idx + 1}`}
+                            fill
+                            sizes="(max-width: 768px) 80px, 96px"
+                            className="object-cover"
+                        />
                     </button>
                 ))}
             </div>
@@ -39,18 +45,20 @@ export function ProductGallery({ images }: ProductGalleryProps) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="w-full h-full"
+                        className="w-full h-full relative"
                     >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
+                        <Image
                             src={images[selectedindex]}
                             alt="Product Detail"
-                            className="w-full h-full object-cover cursor-zoom-in hover:scale-125 transition-transform duration-1000 origin-center"
+                            fill
+                            priority
+                            sizes="(max-width: 768px) 100vw, 600px"
+                            className="object-cover cursor-zoom-in hover:scale-125 transition-transform duration-1000 origin-center"
                         />
                     </motion.div>
                 </AnimatePresence>
 
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-green-800 shadow-sm">
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-green-800 shadow-sm z-10">
                     Real Pic
                 </div>
             </div>

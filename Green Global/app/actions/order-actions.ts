@@ -16,7 +16,7 @@ export async function createOrder(prevState: unknown, formData: FormData) {
     try {
         const email = formData.get('email') as string;
         const cartItemsJson = formData.get('cartItems') as string;
-        const totalUsd = parseFloat(formData.get('total') as string);
+        const totalUsd = parseFloat(formData.get('totalUsd') as string);
 
         if (!cartItemsJson) {
             return { message: 'Cart is empty', success: false };
@@ -54,6 +54,6 @@ export async function createOrder(prevState: unknown, formData: FormData) {
 
     } catch (error) {
         console.error("Order creation failed:", error);
-        return { message: 'Failed to create order', success: false };
+        return { message: `Failed to create order: ${error instanceof Error ? error.message : 'Unknown error'}`, success: false };
     }
 }
