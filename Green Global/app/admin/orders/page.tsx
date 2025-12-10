@@ -1,13 +1,43 @@
 import { PrismaClient } from '@prisma/client';
 import { updateOrderStatus, updatePaymentStatus } from '@/app/actions/admin-actions';
 import { BadgeCheck, Clock, XCircle, Truck, Package } from 'lucide-react';
+import Link from 'next/link';
 
 const prisma = new PrismaClient();
 
 export const dynamic = 'force-dynamic';
 
-export default async function AdminOrdersPage() {
+import { DateFilter } from '@/components/admin/date-filter';
+import { startOfDay, subDays, startOfWeek, startOfMonth, startOfYear, endOfDay } from 'date-fns';
+
+type Props = {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function AdminOrdersPage(props: Props) {
+    const searchParams = await props.searchParams;
+    const filter = typeof searchParams.filter === 'string' ? searchParams.filter : 'all';
+
+    let where: any = {};
+    const now = new Date();
+
+    if (filter === 'today') {
+        where.createdAt = { gte: startOfDay(now) };
+    } else if (filter === 'yesterday') {
+        where.createdAt = {
+            gte: startOfDay(subDays(now, 1)),
+            lt: startOfDay(now)
+        };
+    } else if (filter === 'this_week') {
+        where.createdAt = { gte: startOfWeek(now) };
+    } else if (filter === 'this_month') {
+        where.createdAt = { gte: startOfMonth(now) };
+    } else if (filter === 'this_year') {
+        where.createdAt = { gte: startOfYear(now) };
+    }
+
     const orders = await prisma.order.findMany({
+        where,
         orderBy: { createdAt: 'desc' },
         include: { items: true }
     });
@@ -19,13 +49,16 @@ export default async function AdminOrdersPage() {
                     <h1 className="text-2xl font-serif font-bold text-green-900">Order Management</h1>
                     <p className="text-green-600">Monitor and manage customer orders.</p>
                 </div>
-                <div className="bg-white px-4 py-2 rounded-lg border border-green-100 shadow-sm">
-                    <span className="text-sm font-bold text-green-900">Total Revenue: </span>
-                    <span className="text-gold-600 font-mono">
-                        {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-                            orders.reduce((acc, order) => order.paymentStatus === 'PAID' ? acc + order.totalUsd : acc, 0)
-                        )}
-                    </span>
+                <div className="flex items-center gap-4">
+                    <DateFilter />
+                    <div className="bg-white px-4 py-2 rounded-lg border border-green-100 shadow-sm">
+                        <span className="text-sm font-bold text-green-900">Revenue: </span>
+                        <span className="text-gold-600 font-mono">
+                            {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+                                orders.reduce((acc, order) => order.paymentStatus === 'PAID' ? acc + order.totalUsd : acc, 0)
+                            )}
+                        </span>
+                    </div>
                 </div>
             </div>
 
@@ -62,8 +95,8 @@ export default async function AdminOrdersPage() {
                                 </td>
                                 <td className="p-4">
                                     <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium ${order.paymentStatus === 'PAID' ? 'bg-green-100 text-green-800' :
-                                            order.paymentStatus === 'FAILED' ? 'bg-red-100 text-red-800' :
-                                                'bg-yellow-100 text-yellow-800'
+                                        order.paymentStatus === 'FAILED' ? 'bg-red-100 text-red-800' :
+                                            'bg-yellow-100 text-yellow-800'
                                         }`}>
                                         {order.paymentStatus === 'PAID' ? <BadgeCheck className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
                                         {order.paymentStatus}
@@ -73,16 +106,22 @@ export default async function AdminOrdersPage() {
                                     <StatusBadge status={order.status} />
                                 </td>
                                 <td className="p-4">
-                                    <form action={async () => {
-                                        'use server';
-                                        if (order.status !== 'SHIPPED') {
-                                            await updateOrderStatus(order.id, 'SHIPPED');
-                                        }
-                                    }}>
-                                        <button className="text-xs text-blue-600 hover:underline disabled:opacity-50" disabled={order.status === 'SHIPPED'}>
-                                            Mark Shipped
-                                        </button>
-                                    </form>
+                                    <div className="space-y-1">
+                                        <Link href={`/admin/orders/${order.id}`} className="text-xs text-green-600 hover:text-green-800 font-bold hover:underline block">
+                                            View Details
+                                        </Link>
+
+                                        <form action={async () => {
+                                            'use server';
+                                            if (order.status !== 'SHIPPED') {
+                                                await updateOrderStatus(order.id, 'SHIPPED');
+                                            }
+                                        }}>
+                                            <button className="text-xs text-blue-600 hover:underline disabled:opacity-50" disabled={order.status === 'SHIPPED'}>
+                                                Mark Shipped
+                                            </button>
+                                        </form>
+                                    </div>
                                     {order.paymentStatus !== 'PAID' && (
                                         <form action={async () => {
                                             'use server';

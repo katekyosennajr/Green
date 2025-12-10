@@ -3,12 +3,35 @@ import { Package, ShoppingBag, Users, DollarSign } from 'lucide-react';
 
 const prisma = new PrismaClient();
 
+import { startOfDay, startOfMonth, startOfYear } from 'date-fns';
+
 async function getStats() {
     const productCount = await prisma.product.count();
     const userCount = await prisma.user.count();
     const orderCount = await prisma.order.count();
-    // Simple revenue calc (mock logic since no orders yet)
-    const revenue = 0;
+
+    // Revenue calculations
+    const today = startOfDay(new Date());
+    const thisMonth = startOfMonth(new Date());
+    const thisYear = startOfYear(new Date());
+
+    const calcRevenue = async (dateFilter?: Date) => {
+        const result = await prisma.order.aggregate({
+            _sum: { totalUsd: true },
+            where: {
+                paymentStatus: 'PAID',
+                createdAt: dateFilter ? { gte: dateFilter } : undefined
+            }
+        });
+        return result._sum.totalUsd || 0;
+    };
+
+    const revenue = {
+        today: await calcRevenue(today),
+        month: await calcRevenue(thisMonth),
+        year: await calcRevenue(thisYear),
+        total: await calcRevenue()
+    };
 
     return { productCount, userCount, orderCount, revenue };
 }
@@ -26,46 +49,45 @@ export default async function AdminDashboard() {
         <div className="space-y-8">
             <h1 className="text-2xl font-bold text-gray-800">Dashboard Overview</h1>
 
-            {/* Stats Grid */}
+            {/* Revenue Stats Breakdown */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {/* ... Existing Stats ... */}
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
-                    <div className="p-3 bg-blue-50 rounded-lg">
-                        <Package className="w-6 h-6 text-blue-600" />
-                    </div>
-                    <div>
-                        <p className="text-sm text-gray-500 font-medium">Total Products</p>
-                        <h3 className="text-2xl font-bold text-gray-900">{stats.productCount}</h3>
-                    </div>
-                </div>
-
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
                     <div className="p-3 bg-green-50 rounded-lg">
                         <DollarSign className="w-6 h-6 text-green-600" />
                     </div>
                     <div>
-                        <p className="text-sm text-gray-500 font-medium">Total Revenue</p>
-                        <h3 className="text-2xl font-bold text-gray-900">${stats.revenue.toFixed(2)}</h3>
+                        <p className="text-sm text-gray-500 font-medium">Revenue (Today)</p>
+                        <h3 className="text-2xl font-bold text-gray-900">${stats.revenue.today.toFixed(2)}</h3>
                     </div>
                 </div>
 
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
-                    <div className="p-3 bg-purple-50 rounded-lg">
-                        <ShoppingBag className="w-6 h-6 text-purple-600" />
+                    <div className="p-3 bg-teal-50 rounded-lg">
+                        <DollarSign className="w-6 h-6 text-teal-600" />
                     </div>
                     <div>
-                        <p className="text-sm text-gray-500 font-medium">Orders</p>
-                        <h3 className="text-2xl font-bold text-gray-900">{stats.orderCount}</h3>
+                        <p className="text-sm text-gray-500 font-medium">Revenue (Month)</p>
+                        <h3 className="text-2xl font-bold text-gray-900">${stats.revenue.month.toFixed(2)}</h3>
                     </div>
                 </div>
 
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
-                    <div className="p-3 bg-orange-50 rounded-lg">
-                        <Users className="w-6 h-6 text-orange-600" />
+                    <div className="p-3 bg-emerald-50 rounded-lg">
+                        <DollarSign className="w-6 h-6 text-emerald-600" />
                     </div>
                     <div>
-                        <p className="text-sm text-gray-500 font-medium">Customers</p>
-                        <h3 className="text-2xl font-bold text-gray-900">{stats.userCount}</h3>
+                        <p className="text-sm text-gray-500 font-medium">Revenue (Year)</p>
+                        <h3 className="text-2xl font-bold text-gray-900">${stats.revenue.year.toFixed(2)}</h3>
+                    </div>
+                </div>
+
+                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+                    <div className="p-3 bg-gray-50 rounded-lg">
+                        <DollarSign className="w-6 h-6 text-gray-600" />
+                    </div>
+                    <div>
+                        <p className="text-sm text-gray-500 font-medium">All Time</p>
+                        <h3 className="text-2xl font-bold text-gray-900">${stats.revenue.total.toFixed(2)}</h3>
                     </div>
                 </div>
             </div>
@@ -110,6 +132,6 @@ export default async function AdminDashboard() {
                     )}
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
