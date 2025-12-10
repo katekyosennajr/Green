@@ -17,8 +17,15 @@ interface Product {
 
 export const dynamic = 'force-dynamic';
 
-export default async function CatalogPage() {
-    const products = await getProducts();
+type Props = {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function CatalogPage(props: Props) {
+    const searchParams = await props.searchParams;
+    const category = typeof searchParams.category === 'string' ? searchParams.category : undefined;
+
+    const products = await getProducts(category);
 
     return (
         <div className="bg-cream-50 min-h-screen py-12">
@@ -30,12 +37,32 @@ export default async function CatalogPage() {
                     <p className="text-green-700">Explore our exclusive collection of Borneo Aroids. Each plant is ethically sourced and inspected for export.</p>
                 </div>
 
-                {/* Filters (Mock) */}
+                {/* Filters */}
                 <div className="flex flex-wrap justify-center gap-4 mb-12">
-                    <button className="px-6 py-2 rounded-full bg-green-900 text-white text-sm font-bold">All Plants</button>
-                    <button className="px-6 py-2 rounded-full border border-green-200 text-green-800 hover:bg-green-100 text-sm font-medium transition-colors">Scindapsus</button>
-                    <button className="px-6 py-2 rounded-full border border-green-200 text-green-800 hover:bg-green-100 text-sm font-medium transition-colors">Monstera</button>
-                    <button className="px-6 py-2 rounded-full border border-green-200 text-green-800 hover:bg-green-100 text-sm font-medium transition-colors">Variegated</button>
+                    <Link
+                        href="/catalog"
+                        className={`px-6 py-2 rounded-full text-sm font-bold transition-colors ${!category ? 'bg-green-900 text-white' : 'border border-green-200 text-green-800 hover:bg-green-100'}`}
+                    >
+                        All Plants
+                    </Link>
+                    <Link
+                        href="/catalog?category=Scindapsus"
+                        className={`px-6 py-2 rounded-full text-sm font-bold transition-colors ${category === 'Scindapsus' ? 'bg-green-900 text-white' : 'border border-green-200 text-green-800 hover:bg-green-100'}`}
+                    >
+                        Scindapsus
+                    </Link>
+                    <Link
+                        href="/catalog?category=Monstera"
+                        className={`px-6 py-2 rounded-full text-sm font-bold transition-colors ${category === 'Monstera' ? 'bg-green-900 text-white' : 'border border-green-200 text-green-800 hover:bg-green-100'}`}
+                    >
+                        Monstera
+                    </Link>
+                    <Link
+                        href="/catalog?category=Variegated"
+                        className={`px-6 py-2 rounded-full text-sm font-bold transition-colors ${category === 'Variegated' ? 'bg-green-900 text-white' : 'border border-green-200 text-green-800 hover:bg-green-100'}`}
+                    >
+                        Variegated
+                    </Link>
                 </div>
 
                 {/* Grid */}

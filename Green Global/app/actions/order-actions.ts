@@ -41,7 +41,7 @@ export async function createOrder(prevState: unknown, formData: FormData) {
             }
         });
 
-        // Optional: Reduce stock (handling concurrency in real app is harder, simple version here)
+        // Optional: Reduce stock
         for (const item of cartItems) {
             await prisma.product.update({
                 where: { id: item.id },
@@ -49,8 +49,25 @@ export async function createOrder(prevState: unknown, formData: FormData) {
             });
         }
 
+        // --- Payment Integration ---
+        // We only generate a token if the currency is IDR (Midtrans constraint usually) or if we strictly convert/handle USD.
+        // For this demo, we assume the totalUsd is converted to IDR or directly used if supported.
+        // Let's assume we want to charge in IDR approx (since Midtrans is Indo).
+        // 1 USD approx 16,000 IDR.
+        const rate = 16000;
+        const amountIdr = totalUsd * rate;
+
+        // Import dynamically to avoid require issues if any
+        const { createPaymentToken } = await import('@/lib/payment');
+        const paymentToken = await createPaymentToken(order.id, amountIdr, { email });
+
         revalidatePath('/admin/orders');
-        return { message: 'Order placed successfully!', success: true, orderId: order.id };
+        return {
+            message: 'Order placed successfully!',
+            success: true,
+            orderId: order.id,
+            paymentToken // Return the token to client
+        };
 
     } catch (error) {
         console.error("Order creation failed:", error);

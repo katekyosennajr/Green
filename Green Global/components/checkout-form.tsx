@@ -6,11 +6,27 @@ import { useFormState } from 'react-dom';
 import { useEffect, useRef } from 'react';
 import { Loader2, CheckCircle } from 'lucide-react';
 import { useFormStatus } from 'react-dom';
+import Script from 'next/script';
 
-const initialState = {
+// Add global type for Snap
+declare global {
+    interface Window {
+        snap: any;
+    }
+}
+
+interface FormState {
+    message: string;
+    success: boolean;
+    orderId?: string | null;
+    paymentToken?: string | null;
+}
+
+const initialState: FormState = {
     message: '',
     success: false,
-    orderId: ''
+    orderId: undefined,
+    paymentToken: undefined
 };
 
 function SubmitButton() {
@@ -48,11 +64,30 @@ export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
         if (state.success) {
             clearCart();
             formRef.current?.reset();
-            if (onSuccess) {
-                onSuccess();
+
+            // Handle Payment
+            if (state.paymentToken) {
+                // Check if snap is loaded
+                if (window.snap) {
+                    window.snap.pay(state.paymentToken, {
+                        onSuccess: function (result: any) { alert('Payment Success!'); console.log(result); },
+                        onPending: function (result: any) { alert('Waiting for Payment!'); console.log(result); },
+                        onError: function (result: any) { alert('Payment Failed!'); console.log(result); },
+                        onClose: function () {
+                            console.log('Customer closed the popup without finishing the payment');
+                            // Still success order placement, just allow them to continue
+                            if (onSuccess) onSuccess();
+                        }
+                    });
+                } else {
+                    console.error("Snap JS not loaded!");
+                    if (onSuccess) onSuccess(); // Fallback to success view
+                }
+            } else {
+                if (onSuccess) onSuccess();
             }
         }
-    }, [state.success, clearCart, onSuccess]);
+    }, [state.success, state.paymentToken, clearCart, onSuccess]);
 
     if (state.success) {
         return (
@@ -71,8 +106,15 @@ export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
     if (items.length === 0) return null;
 
     return (
-        <div className="bg-white p-8 rounded-2xl border border-green-100 shadow-sm">
-            <h3 className="font-bold text-xl text-green-900 mb-6 border-b border-green-50 pb-4">Shipping Details</h3>
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-green-50">
+            {/* Midtrans Snap Script - Sandbox URL */}
+            <Script
+                src="https://app.sandbox.midtrans.com/snap/snap.js"
+                data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY || 'SB-Mid-client-dummy-key'}
+                strategy="lazyOnload"
+            />
+
+            <h3 className="font-serif text-xl font-bold text-green-900 mb-6">Checkout Details</h3>
             <form action={formAction} ref={formRef} className="space-y-4">
                 <input type="hidden" name="cartItems" value={JSON.stringify(items)} />
                 <input type="hidden" name="totalUsd" value={totalAmount} />

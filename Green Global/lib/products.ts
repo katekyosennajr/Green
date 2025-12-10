@@ -25,21 +25,39 @@ export const getFeaturedProducts = unstable_cache(
     { revalidate: 3600, tags: ['products'] }
 );
 
-export const getProducts = unstable_cache(
-    async () => {
-        try {
-            return await prisma.product.findMany({
-                orderBy: { createdAt: 'desc' },
-                where: { stock: { gt: 0 } }
-            });
-        } catch (error) {
-            console.error("Failed to fetch products:", error);
-            return [];
-        }
-    },
-    ['all-products-v5'],
-    { revalidate: 3600, tags: ['products'] }
-);
+export const getProducts = async (category?: string) => {
+    const cachedFn = unstable_cache(
+        async () => {
+            try {
+                const where: any = { stock: { gt: 0 } };
+
+                if (category) {
+                    if (category === 'Variegated') {
+                        where.OR = [
+                            { name: { contains: 'Variegated' } },
+                            { description: { contains: 'Variegated' } }
+                        ];
+                    } else {
+                        where.category = category;
+                    }
+                }
+
+                const products = await prisma.product.findMany({
+                    orderBy: { createdAt: 'desc' },
+                    where
+                });
+                console.log(`[DEBUG] Fetched ${products.length} products for category: ${category || 'ALL'}`);
+                return products;
+            } catch (error) {
+                console.error("Failed to fetch products:", error);
+                return [];
+            }
+        },
+        [`all-products-v5-${category || 'all'}`],
+        { revalidate: 3600, tags: ['products'] }
+    );
+    return cachedFn();
+};
 
 export const getProduct = async (slug: string) => {
     const cachedFn = unstable_cache(
