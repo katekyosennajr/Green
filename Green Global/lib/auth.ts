@@ -35,9 +35,11 @@ export const authOptions: NextAuthOptions = {
                     return null;
                 }
 
-                // Simple password check for demo/seed data (In prod use bcrypt)
-                // The seed data uses plain text "admin123" currently or can be updated
-                if (credentials.password === user.password) {
+                // Verify Password using bcrypt
+                const { compare } = await import('bcryptjs');
+                const isPasswordValid = await compare(credentials.password, user.password);
+
+                if (isPasswordValid) {
                     return {
                         id: user.id,
                         email: user.email,

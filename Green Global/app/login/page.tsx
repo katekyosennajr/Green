@@ -28,8 +28,12 @@ export default function LoginPage() {
             if (result?.error) {
                 setError('Invalid email or password');
             } else {
-                router.push('/');
-                router.refresh();
+                if (email === 'riant.andriansyah97@gmail.com') {
+                    // Force full reload for admin to ensure clean slate layout
+                    window.location.href = '/admin';
+                } else {
+                    window.location.href = '/';
+                }
             }
         } catch {
             setError('An error occurred. Please try again.');

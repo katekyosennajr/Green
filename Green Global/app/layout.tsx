@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google"; // Senior Dev: Use next/font
 import "./globals.css";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({
@@ -71,11 +69,7 @@ export default function RootLayout({
         <AuthProvider>
           <CurrencyProvider>
             <CartProvider>
-              <SiteHeader />
-              <main className="flex-1 flex flex-col">
-                {children}
-              </main>
-              <SiteFooter />
+              {children}
             </CartProvider>
           </CurrencyProvider>
         </AuthProvider>
