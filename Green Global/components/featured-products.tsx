@@ -76,7 +76,9 @@ export async function FeaturedProducts() {
                                         </h3>
                                         <div className="flex items-center justify-between mt-4 border-t border-green-50 pt-4">
                                             <PriceDisplay amountUsd={product.priceUsd} className="text-green-800 font-bold text-lg" />
-                                            <span className="text-xs text-green-400">Stock: {product.stock}</span>
+                                            <span className={`text-xs font-bold ${product.stock > 0 ? 'text-green-400' : 'text-red-600'}`}>
+                                                Stock: {product.stock}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

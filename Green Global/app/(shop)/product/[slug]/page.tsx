@@ -95,9 +95,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                         </div>
 
                         <div className="flex items-center space-x-4 border-y border-green-100 py-6">
-                            <PriceDisplay amountUsd={product.priceUsd} className="text-4xl font-bold text-green-900" />
-                            <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-bold uppercase rounded-full">
-                                In Stock: {product.stock}
+                            <span className={`px-3 py-1 text-xs font-bold uppercase rounded-full ${product.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-600'}`}>
+                                {product.stock > 0 ? `In Stock: ${product.stock}` : `Stock: ${product.stock}`}
                             </span>
                         </div>
 

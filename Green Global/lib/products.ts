@@ -32,13 +32,16 @@ export const getProducts = async (category?: string) => {
                 const where: any = { stock: { gt: 0 } };
 
                 if (category) {
-                    if (category === 'Variegated') {
+                    // Make robust: Capitalize first letter to match DB convention if user types lowercase
+                    const normalizedCategory = category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
+
+                    if (normalizedCategory === 'Variegated') {
                         where.OR = [
                             { name: { contains: 'Variegated' } },
                             { description: { contains: 'Variegated' } }
                         ];
                     } else {
-                        where.category = category;
+                        where.category = normalizedCategory;
                     }
                 }
 

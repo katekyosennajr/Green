@@ -25,8 +25,8 @@ export function SiteFooter() {
                         <h4 className="font-serif text-lg mb-4 text-cream-100">Shop</h4>
                         <ul className="space-y-2 text-sm text-green-300">
                             <li><Link href="/catalog" className="hover:text-gold-400">All Plants</Link></li>
-                            <li><Link href="/catalog?category=scindapsus" className="hover:text-gold-400">Scindapsus</Link></li>
-                            <li><Link href="/catalog?category=monstera" className="hover:text-gold-400">Monstera</Link></li>
+                            <li><Link href="/catalog?category=Scindapsus" className="hover:text-gold-400">Scindapsus</Link></li>
+                            <li><Link href="/catalog?category=Monstera" className="hover:text-gold-400">Monstera</Link></li>
                             <li><Link href="/wholesale" className="hover:text-gold-400">Wholesale / B2B</Link></li>
                         </ul>
                     </div>
