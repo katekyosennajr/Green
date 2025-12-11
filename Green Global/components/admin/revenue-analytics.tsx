@@ -26,7 +26,7 @@ export function RevenueAnalytics({ dailySales, monthlySales, totalRevenue }: Ana
     const data = period === 'day' ? dailySales : monthlySales;
     const items = period === 'day' ? dailySales : monthlySales;
 
-    // Cari nilai tertinggi untuk skala atau highlight
+    // Find highest value for scale or highlight
     const maxVal = Math.max(...items.map(d => d.amount), 0);
 
     return (
@@ -35,38 +35,38 @@ export function RevenueAnalytics({ dailySales, monthlySales, totalRevenue }: Ana
                 <div>
                     <h2 className="text-xl font-bold text-green-900 flex items-center gap-2">
                         <TrendingUp className="w-6 h-6 text-gold-500" />
-                        Performa Penjualan
+                        Sales Performance
                     </h2>
-                    <p className="text-sm text-green-600">Statistik pendapatan terupdate.</p>
+                    <p className="text-sm text-green-600">Updated revenue statistics.</p>
                 </div>
 
                 <div className="flex bg-green-50 rounded-lg p-1">
                     <button
                         onClick={() => setPeriod('day')}
                         className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${period === 'day'
-                                ? 'bg-white text-green-800 shadow-sm'
-                                : 'text-green-600 hover:text-green-800'
+                            ? 'bg-white text-green-800 shadow-sm'
+                            : 'text-green-600 hover:text-green-800'
                             }`}
                     >
-                        7 Hari Terakhir
+                        Last 7 Days
                     </button>
                     <button
                         onClick={() => setPeriod('month')}
                         className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${period === 'month'
-                                ? 'bg-white text-green-800 shadow-sm'
-                                : 'text-green-600 hover:text-green-800'
+                            ? 'bg-white text-green-800 shadow-sm'
+                            : 'text-green-600 hover:text-green-800'
                             }`}
                     >
-                        Bulanan (Tahun Ini)
+                        Monthly (This Year)
                     </button>
                 </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                {/* Summary Card (Kiri) */}
+                {/* Summary Card (Left) */}
                 <div className="lg:col-span-1 space-y-6">
                     <div className="p-6 bg-green-900 rounded-xl text-white">
-                        <p className="text-green-300 text-sm font-medium mb-1">Total Pendapatan</p>
+                        <p className="text-green-300 text-sm font-medium mb-1">Total Revenue</p>
                         <h3 className="text-3xl font-bold font-mono">
                             {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalRevenue)}
                         </h3>
@@ -77,14 +77,14 @@ export function RevenueAnalytics({ dailySales, monthlySales, totalRevenue }: Ana
                     </div>
 
                     <div className="p-6 border border-green-100 rounded-xl">
-                        <p className="text-gray-500 text-sm font-medium mb-1">Tertinggi ({period === 'day' ? 'Harian' : 'Bulanan'})</p>
+                        <p className="text-gray-500 text-sm font-medium mb-1">Highest ({period === 'day' ? 'Daily' : 'Monthly'})</p>
                         <h3 className="text-2xl font-bold text-green-800 font-mono">
                             {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(maxVal)}
                         </h3>
                     </div>
                 </div>
 
-                {/* Chart Area (Kanan) */}
+                {/* Chart Area (Right) */}
                 <div className="lg:col-span-3 h-[300px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={data}>
@@ -105,6 +105,7 @@ export function RevenueAnalytics({ dailySales, monthlySales, totalRevenue }: Ana
                             <Tooltip
                                 cursor={{ fill: '#f0fdf4' }}
                                 contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                formatter={(value: number) => [`$${value.toFixed(2)}`, 'Revenue']}
                             />
                             <Bar
                                 dataKey="amount"

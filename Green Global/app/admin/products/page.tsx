@@ -3,16 +3,18 @@ import { createProduct, deleteProduct } from '@/app/actions/product-actions';
 import { Trash2, Plus, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { StockEditor } from '@/components/admin/stock-editor';
+import { ProductForm } from '@/components/admin/product-form';
 
 export const dynamic = 'force-dynamic';
 
 const prisma = new PrismaClient();
 
-export default async function AdminProductsPage({
-    searchParams
-}: {
-    searchParams: { new?: string }
-}) {
+type Props = {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function AdminProductsPage(props: Props) {
+    const searchParams = await props.searchParams;
     const isCreating = searchParams.new === 'true';
     const products = await prisma.product.findMany({ orderBy: { createdAt: 'desc' } });
 
@@ -36,44 +38,7 @@ export default async function AdminProductsPage({
                         <h2 className="font-bold text-xl text-green-900">Add New Plant</h2>
                     </div>
 
-                    <form action={createProduct} className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-medium text-green-800 mb-1">Commercial Name</label>
-                                <input name="name" required className="w-full border border-green-200 rounded-lg p-2.5 focus:ring-2 focus:ring-gold-500 focus:outline-none" placeholder="e.g. Scindapsus Snake Scale" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-green-800 mb-1">Scientific Name</label>
-                                <input name="scientificName" required className="w-full border border-green-200 rounded-lg p-2.5 focus:ring-2 focus:ring-gold-500 focus:outline-none" placeholder="e.g. Scindapsus sp." />
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-medium text-green-800 mb-1">Price (USD)</label>
-                                <input name="price" type="number" step="0.01" required className="w-full border border-green-200 rounded-lg p-2.5 focus:ring-2 focus:ring-gold-500 focus:outline-none" placeholder="0.00" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-green-800 mb-1">Stock</label>
-                                <input name="stock" type="number" required className="w-full border border-green-200 rounded-lg p-2.5 focus:ring-2 focus:ring-gold-500 focus:outline-none" placeholder="0" />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-green-800 mb-1">Image URLs (Comma separated)</label>
-                            <input name="images" required className="w-full border border-green-200 rounded-lg p-2.5 focus:ring-2 focus:ring-gold-500 focus:outline-none" placeholder="https://..., https://..." />
-                            <p className="text-xs text-green-500 mt-1">Use external URLs for this V1 demo.</p>
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-green-800 mb-1">Description</label>
-                            <textarea name="description" rows={4} required className="w-full border border-green-200 rounded-lg p-2.5 focus:ring-2 focus:ring-gold-500 focus:outline-none" placeholder="Plant description..." />
-                        </div>
-
-                        <button type="submit" className="w-full bg-green-900 text-white font-bold py-3 rounded-lg hover:bg-gold-600 transition-colors">
-                            Create Product
-                        </button>
-                    </form>
+                    <ProductForm />
                 </div>
             ) : (
                 <div className="bg-white rounded-xl shadow-sm border border-green-100 overflow-hidden">
