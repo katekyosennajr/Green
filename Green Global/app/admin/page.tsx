@@ -1,5 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { RevenueAnalytics } from '@/components/admin/revenue-analytics';
+import { AutoRefresh } from '@/components/admin/auto-refresh';
+
+export const dynamic = 'force-dynamic';
 
 const prisma = new PrismaClient();
 
@@ -27,7 +30,7 @@ async function getStats() {
         const result = await prisma.order.aggregate({
             _sum: { totalUsd: true },
             where: {
-                paymentStatus: 'PAID',
+                paymentStatus: 'PAID', // Keep strict for Revenue
                 createdAt: {
                     gte: start,
                     lt: end
@@ -81,6 +84,8 @@ export default async function AdminDashboard() {
 
     return (
         <div className="space-y-8">
+            <AutoRefresh />
+
             <h1 className="text-2xl font-bold text-gray-800">Dashboard Overview</h1>
 
             {/* Analytics Widget (Replaces Old 4 Cards) */}

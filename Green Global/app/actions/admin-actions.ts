@@ -26,6 +26,7 @@ export async function updatePaymentStatus(orderId: string, newStatus: string) {
             data: { paymentStatus: newStatus }
         });
         revalidatePath('/admin/orders');
+        revalidatePath('/admin'); // Update dashboard too
         return { success: true };
     } catch (error) {
         console.error("Failed to update payment status:", error);
