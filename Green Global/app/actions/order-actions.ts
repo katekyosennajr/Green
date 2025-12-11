@@ -29,8 +29,8 @@ export async function createOrder(prevState: unknown, formData: FormData) {
             data: {
                 totalUsd,
                 status: 'PENDING',
-                guestEmail: email, // For now, we allow guest checkout
-                // If logged in, we would attach userId here
+                guestEmail: email, // Saat ini kita izinkan checkout tamu
+                // Jika login, kita akan lampirkan userId di sini
                 items: {
                     create: cartItems.map((item) => ({
                         productId: item.id,
@@ -41,7 +41,7 @@ export async function createOrder(prevState: unknown, formData: FormData) {
             }
         });
 
-        // Optional: Reduce stock
+        // Opsional: Kurangi stok
         for (const item of cartItems) {
             await prisma.product.update({
                 where: { id: item.id },
@@ -49,15 +49,15 @@ export async function createOrder(prevState: unknown, formData: FormData) {
             });
         }
 
-        // --- Payment Integration ---
-        // We only generate a token if the currency is IDR (Midtrans constraint usually) or if we strictly convert/handle USD.
-        // For this demo, we assume the totalUsd is converted to IDR or directly used if supported.
-        // Let's assume we want to charge in IDR approx (since Midtrans is Indo).
-        // 1 USD approx 16,000 IDR.
+        // --- Integrasi Pembayaran ---
+        // Kita hanya generate token jika mata uang IDR (batasan Midtrans biasanya) atau jika kita konversi ketat.
+        // Untuk demo ini, kita asumsikan totalUsd dikonversi ke IDR atau dipakai langsung jika didukung.
+        // Asumsi: Konversi ke IDR (karena Midtrans basis Indo).
+        // 1 USD kira-kira 16.000 IDR.
         const rate = 16000;
         const amountIdr = totalUsd * rate;
 
-        // Import dynamically to avoid require issues if any
+        // Import dinamis untuk menghindari masalah require jika ada
         const { createPaymentToken } = await import('@/lib/payment');
         const paymentToken = await createPaymentToken(order.id, amountIdr, { email });
 
@@ -66,7 +66,7 @@ export async function createOrder(prevState: unknown, formData: FormData) {
             message: 'Order placed successfully!',
             success: true,
             orderId: order.id,
-            paymentToken // Return the token to client
+            paymentToken // Kembalikan token ke client untuk Snap Popup
         };
 
     } catch (error) {

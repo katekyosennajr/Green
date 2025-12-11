@@ -1,6 +1,6 @@
 import midtransClient from 'midtrans-client';
 
-// Use environment variables or fallbacks for development/demo safety
+// Gunakan variabel environment atau fallback demi keamanan development/demo
 const SERVER_KEY = process.env.MIDTRANS_SERVER_KEY || 'SB-Mid-server-dummy-key';
 const CLIENT_KEY = process.env.MIDTRANS_CLIENT_KEY || 'SB-Mid-client-dummy-key';
 
@@ -20,7 +20,7 @@ export async function createPaymentToken(orderId: string, amount: number, custom
         const parameter = {
             transaction_details: {
                 order_id: orderId,
-                gross_amount: Math.round(amount), // Midtrans requires integer for IDR, strict typing
+                gross_amount: Math.round(amount), // Midtrans butuh integer untuk IDR, strict typing
             },
             credit_card: {
                 secure: true

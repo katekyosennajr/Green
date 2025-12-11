@@ -85,7 +85,7 @@ export default async function AdminOrdersPage(props: Props) {
                                 </td>
                                 <td className="p-4 text-sm text-green-900 font-medium">
                                     {order.guestEmail}<br />
-                                    {/* Name and Address are in separate fields usually, assuming guestEmail for now */}
+                                    {/* Nama dan Alamat biasanya di field terpisah, asumsi pakai guestEmail dulu */}
                                 </td>
                                 <td className="p-4 text-sm text-green-700">
                                     {order.items.length} items
@@ -155,7 +155,7 @@ function StatusBadge({ status }: { status: string }) {
         CANCELLED: 'bg-red-100 text-red-800'
     };
 
-    // Fallback
+    // Fallback jika status tidak dikenali
     const style = styles[status as keyof typeof styles] || 'bg-gray-100 text-gray-800';
 
     return (

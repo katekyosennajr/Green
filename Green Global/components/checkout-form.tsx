@@ -8,12 +8,15 @@ import { Loader2, CheckCircle } from 'lucide-react';
 import { useFormStatus } from 'react-dom';
 import Script from 'next/script';
 
-// Add global type for Snap
+// Tambah tipe global untuk Snap
 declare global {
     interface Window {
         snap: any;
     }
 }
+
+import { CreditCard, Wallet, QrCode, Landmark } from 'lucide-react';
+import { useCurrency } from '@/components/currency-provider';
 
 interface FormState {
     message: string;
@@ -29,7 +32,7 @@ const initialState: FormState = {
     paymentToken: undefined
 };
 
-function SubmitButton() {
+function SubmitButton({ label }: { label: string }) {
     const { pending } = useFormStatus();
 
     return (
@@ -44,7 +47,7 @@ function SubmitButton() {
                     Processing...
                 </>
             ) : (
-                'Confirm Order'
+                label
             )}
         </button>
     );
@@ -57,6 +60,7 @@ interface CheckoutFormProps {
 
 export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
     const { items, clearCart } = useCart();
+    const { currency } = useCurrency();
     const [state, formAction] = useFormState(createOrder, initialState);
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -65,9 +69,9 @@ export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
             clearCart();
             formRef.current?.reset();
 
-            // Handle Payment
+            // Handle Pembayaran
             if (state.paymentToken) {
-                // Check if snap is loaded
+                // Cek apakah snap sudah dimuat
                 if (window.snap) {
                     window.snap.pay(state.paymentToken, {
                         onSuccess: function (result: any) { alert('Payment Success!'); console.log(result); },
@@ -75,13 +79,13 @@ export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
                         onError: function (result: any) { alert('Payment Failed!'); console.log(result); },
                         onClose: function () {
                             console.log('Customer closed the popup without finishing the payment');
-                            // Still success order placement, just allow them to continue
+                            // Tetap sukses order placement, biarkan lanjut
                             if (onSuccess) onSuccess();
                         }
                     });
                 } else {
                     console.error("Snap JS not loaded!");
-                    if (onSuccess) onSuccess(); // Fallback to success view
+                    if (onSuccess) onSuccess(); // Fallback ke tampilan sukses
                 }
             } else {
                 if (onSuccess) onSuccess();
@@ -140,7 +144,35 @@ export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
                     </div>
                 )}
 
-                <SubmitButton />
+                <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                    <p className="text-xs text-gray-500 font-medium mb-3">
+                        {currency === 'USD' ? 'Accepted International Payments:' : 'Metode Pembayaran Lokal:'}
+                    </p>
+                    <div className="flex flex-wrap gap-2 items-center">
+                        {currency === 'USD' ? (
+                            <>
+                                <div className="flex flex-wrap gap-2">
+                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-blue-800 flex items-center gap-1"><CreditCard className="w-3 h-3" /> VISA</span>
+                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-red-600 flex items-center gap-1"><CreditCard className="w-3 h-3" /> Mastercard</span>
+                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-blue-500">Amex</span>
+                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-green-600 flex items-center gap-1"><CreditCard className="w-3 h-3" /> JCB</span>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div className="flex flex-wrap gap-2">
+                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-gray-800 flex items-center gap-1"><QrCode className="w-3 h-3" /> QRIS</span>
+                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-blue-600 flex items-center gap-1"><Wallet className="w-3 h-3" /> GoPay</span>
+                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-blue-800 flex items-center gap-1"><Landmark className="w-3 h-3" /> BCA</span>
+                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-blue-900 flex items-center gap-1"><Landmark className="w-3 h-3" /> Mandiri</span>
+                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-orange-600 flex items-center gap-1"><Landmark className="w-3 h-3" /> BNI</span>
+                                </div>
+                            </>
+                        )}
+                    </div>
+                </div>
+
+                <SubmitButton label={currency === 'USD' ? 'Proceed to Secure Payment' : 'Lanjut ke Pembayaran'} />
 
                 <p className="text-xs text-center text-green-400 mt-4">
                     By confirming, you agree to our Terms of Export.

@@ -5,14 +5,14 @@ test.describe('Global Green Exporter - Core User Flow', () => {
     test('Homepage loads and displays critical elements', async ({ page }) => {
         await page.goto('/');
 
-        // Check Title
+        // Cek Judul Halaman
         await expect(page).toHaveTitle(/Global Green Exporter/);
 
-        // Check Hero Section
+        // Cek Bagian Hero (Judul Utama)
         const heroHeading = page.getByRole('heading', { name: /Source the Rarest/i });
         await expect(heroHeading).toBeVisible();
 
-        // Check Verify Badges (Phyto, Guarantee)
+        // Cek Badge Verifikasi (Phyto, Garansi)
         await expect(page.getByText('100% Live Guarantee')).toBeVisible();
         await expect(page.getByText('Free Phyto Cert')).toBeVisible();
     });
@@ -23,38 +23,38 @@ test.describe('Global Green Exporter - Core User Flow', () => {
         const productGrid = page.locator('.grid');
         await expect(productGrid).toBeVisible();
 
-        // Check for specific product name
+        // Cek nama produk spesifik
         await expect(page.getByText('Scindapsus')).toBeVisible();
     });
 
     test('Full Purchase Flow (Add to Cart -> Checkout)', async ({ page }) => {
-        // 1. Go to Catalog
+        // 1. Masuk ke Katalog
         await page.goto('/catalog');
 
-        // 2. Click first product
+        // 2. Klik produk pertama
         await page.locator('.group a').first().click();
 
-        // 3. Verify Product Page
+        // 3. Verifikasi Halaman Produk
         await expect(page.getByText('Genetic Guarantee')).toBeVisible();
 
-        // 4. Add to Cart
+        // 4. Tambah ke Keranjang
         await page.getByRole('button', { name: /Add to Cart/i }).click();
 
-        // 5. Go to Cart
+        // 5. Masuk ke Keranjang
         await page.goto('/cart');
 
-        // 6. Verify Item in Cart
+        // 6. Verifikasi Item di Keranjang
         await expect(page.getByText('Qty')).toBeVisible();
 
-        // 7. Verify Shipping Logic
+        // 7. Verifikasi Logika Pengiriman
         await expect(page.getByText('Shipping (Flat Rate)')).toBeVisible();
-        await expect(page.getByText('$150')).toBeVisible(); // Assuming default USD
+        await expect(page.getByText('$150')).toBeVisible(); // Asumsi default USD
 
-        // 8. Fill Checkout Form
+        // 8. Isi Form Checkout
         await page.fill('input[name="email"]', 'test@qa.com');
 
-        // 9. Submit Order (Mocked Action)
-        // Note: We won't submit to avoid DB spam in this test, or we can catch the redirect
+        // 9. Submit Order (Mock Action)
+        // Catatan: Tidak submit asli untuk mencegah spam DB
         const submitBtn = page.getByRole('button', { name: /Confirm Order/i });
         await expect(submitBtn).toBeVisible();
         await expect(submitBtn).toBeEnabled();
@@ -64,14 +64,14 @@ test.describe('Global Green Exporter - Core User Flow', () => {
         await page.goto('/catalog');
 
         // Default USD
-        // We need a price element to check. Assuming PriceDisplay renders $
+        // Kita butuh elemen harga untuk dicek. Asumsi PriceDisplay render $
 
-        // Toggle to IDR
+        // Ganti ke IDR
         await page.getByRole('button', { name: 'IDR' }).first().click();
 
-        // Expect Rp or IDR format
-        // This might require a small wait or check for text change
-        // Using a loose check for "Rp" symbol or relevant format if strictly formatted
+        // Ekspektasi format Rp atau IDR
+        // Mungkin butuh waktu tunggu kecil atau cek perubahan teks
+        // Menggunakan cek longgar untuk simbol "Rp" atau format relevan
     });
 
 });

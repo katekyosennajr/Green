@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { Metadata } from 'next';
 import { ProductGallery } from '@/components/product-gallery';
 import { ExportInfoTabs } from '@/components/export-info-tabs';
@@ -70,8 +71,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <div className="container mx-auto px-4">
 
                 {/* Breadcrumb (Simple) */}
-                <div className="text-sm text-green-400 mb-8 uppercase tracking-widest font-bold">
-                    Catalog / <span className="text-green-800">{product.name}</span>
+                <div className="text-sm text-green-400 mb-8 uppercase tracking-widest font-bold flex items-center gap-2">
+                    <Link href="/catalog" className="hover:text-green-600 hover:underline transition-colors">Catalog</Link>
+                    <span>/</span>
+                    <span className="text-green-800">{product.name}</span>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">

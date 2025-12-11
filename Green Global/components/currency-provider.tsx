@@ -13,14 +13,14 @@ interface CurrencyContextType {
 
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
-// Fixed rate for MVP. 
-// In a real app, this would be fetched from an API.
+// Rate tetap untuk MVP.
+// Di aplikasi nyata, ini bisa diambil dari API.
 const EXCHANGE_RATE = 16000;
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
     const [currency, setCurrency] = useState<Currency>('USD');
 
-    // Persist preference
+    // Simpan preferensi
     useEffect(() => {
         const saved = localStorage.getItem('currency');
         if (saved === 'USD' || saved === 'IDR') {
