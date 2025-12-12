@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { getFeaturedProducts } from '@/lib/products';
-import { ShoppingBag } from 'lucide-react';
 import { PriceDisplay } from '@/components/price-display';
+import { QuickAddToCartButton } from '@/components/quick-add-to-cart-button';
 
 interface Product {
     id: string;
@@ -15,7 +15,7 @@ interface Product {
     description: string;
 }
 
-// This is a Server Component
+// Ini adalah Komponen Server
 export async function FeaturedProducts() {
     const products = await getFeaturedProducts();
 
@@ -61,9 +61,17 @@ export async function FeaturedProducts() {
                                                 <span className="bg-white text-black px-3 py-1 text-xs font-bold uppercase">Sold Out</span>
                                             </div>
                                         )}
-                                        <button className="absolute bottom-4 right-4 bg-white/90 hover:bg-gold-500 hover:text-white p-3 rounded-full shadow-lg translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10">
-                                            <ShoppingBag className="w-5 h-5" />
-                                        </button>
+                                        <QuickAddToCartButton
+                                            product={{
+                                                id: product.id,
+                                                name: product.name,
+                                                priceUsd: product.priceUsd,
+                                                images: product.images,
+                                                slug: product.slug,
+                                                scientificName: product.scientificName || undefined
+                                            }}
+                                            className="absolute bottom-4 right-4 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
+                                        />
                                     </div>
 
                                     {/* Content */}

@@ -7,9 +7,11 @@ export function SiteFooter() {
             <div className="container mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
 
-                    {/* Brand */}
+                    {/* Logo Brand */}
                     <div className="space-y-4">
-                        <h3 className="font-serif text-2xl font-bold text-gold-500">GlobalGreen</h3>
+                        <h3 className="font-serif text-2xl font-bold text-white">
+                            Global<span className="text-gold-500">Green</span>
+                        </h3>
                         <p className="text-sm text-green-200 max-w-xs">
                             Direct from Borneo to the World. We specialize in exporting rare Aroids with full phytosanitary compliance.
                         </p>
@@ -20,7 +22,7 @@ export function SiteFooter() {
                         </div>
                     </div>
 
-                    {/* Quick Links */}
+                    {/* Tautan Cepat */}
                     <div>
                         <h4 className="font-serif text-lg mb-4 text-cream-100">Shop</h4>
                         <ul className="space-y-2 text-sm text-green-300">
@@ -31,7 +33,7 @@ export function SiteFooter() {
                         </ul>
                     </div>
 
-                    {/* Support */}
+                    {/* Bantuan */}
                     <div>
                         <h4 className="font-serif text-lg mb-4 text-cream-100">Support</h4>
                         <ul className="space-y-2 text-sm text-green-300">
@@ -42,7 +44,7 @@ export function SiteFooter() {
                         </ul>
                     </div>
 
-                    {/* Newsletter / Contact */}
+                    {/* Kontak / Newsletter */}
                     <div>
                         <h4 className="font-serif text-lg mb-4 text-cream-100">Contact</h4>
                         <p className="text-sm text-green-300 mb-2">WhatsApp: +62 812-3456-7890</p>

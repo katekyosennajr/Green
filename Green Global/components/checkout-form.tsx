@@ -3,7 +3,7 @@
 import { createOrder } from '@/app/actions/order-actions';
 import { useCart } from '@/components/cart-provider';
 import { useFormState } from 'react-dom';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Loader2, CheckCircle } from 'lucide-react';
 import { useFormStatus } from 'react-dom';
 import Script from 'next/script';
@@ -63,6 +63,7 @@ export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
     const { currency } = useCurrency();
     const [state, formAction] = useFormState(createOrder, initialState);
     const formRef = useRef<HTMLFormElement>(null);
+    const [country, setCountry] = useState('International'); // Default ke Internasional sesuai fokus ekspor
 
     useEffect(() => {
         if (state.success) {
@@ -111,7 +112,7 @@ export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
 
     return (
         <div className="bg-white p-6 rounded-xl shadow-sm border border-green-50">
-            {/* Midtrans Snap Script - Sandbox URL */}
+            {/* Script Midtrans Snap - URL Sandbox */}
             <Script
                 src="https://app.sandbox.midtrans.com/snap/snap.js"
                 data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY || 'SB-Mid-client-dummy-key'}
@@ -136,6 +137,47 @@ export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
                 <div>
                     <label className="block text-sm font-medium text-green-800 mb-1">Shipping Address</label>
                     <textarea name="address" required rows={3} className="w-full border border-green-200 rounded-lg p-3 focus:ring-2 focus:ring-gold-500 focus:outline-none" placeholder="Full street address, City, Country" />
+                </div>
+
+                {/* Pilihan Negara & Pengiriman */}
+                <div className="space-y-4">
+                    <div>
+                        <label className="block text-sm font-medium text-green-800 mb-1">Country</label>
+                        <select
+                            name="country"
+                            className="w-full border border-green-200 rounded-lg p-3 focus:ring-2 focus:ring-gold-500 focus:outline-none bg-white"
+                            onChange={(e) => setCountry(e.target.value)}
+                            value={country}
+                        >
+                            <option value="International">International (Outside Indonesia)</option>
+                            <option value="Indonesia">Indonesia</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-green-800 mb-1">Shipping Courier</label>
+                        <div className="flex flex-col gap-2 mt-2">
+                            {country === 'Indonesia' ? (
+                                <>
+                                    <label className="flex items-center gap-2 border border-green-100 p-3 rounded-lg cursor-pointer hover:bg-green-50 transition-colors">
+                                        <input type="radio" name="courier" value="JNE" defaultChecked className="text-green-600 focus:ring-green-500" />
+                                        <span className="font-bold text-green-900">JNE</span>
+                                        <span className="text-xs text-green-600 ml-auto">Domestic</span>
+                                    </label>
+                                    <label className="flex items-center gap-2 border border-green-100 p-3 rounded-lg cursor-pointer hover:bg-green-50 transition-colors">
+                                        <input type="radio" name="courier" value="J&T" className="text-green-600 focus:ring-green-500" />
+                                        <span className="font-bold text-green-900">J&T Express</span>
+                                        <span className="text-xs text-green-600 ml-auto">Domestic</span>
+                                    </label>
+                                </>
+                            ) : (
+                                <label className="flex items-center gap-2 border border-green-100 p-3 rounded-lg cursor-pointer bg-green-50 border-green-200 transition-colors">
+                                    <input type="radio" name="courier" value="DHL Express" defaultChecked className="text-green-600 focus:ring-green-500" />
+                                    <span className="font-bold text-green-900">DHL Express</span>
+                                    <span className="text-xs text-green-600 ml-auto">International</span>
+                                </label>
+                            )}
+                        </div>
+                    </div>
                 </div>
 
                 {state.message && !state.success && (
@@ -172,7 +214,7 @@ export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
                     </div>
                 </div>
 
-                <SubmitButton label={currency === 'USD' ? 'Proceed to Secure Payment' : 'Lanjut ke Pembayaran'} />
+                <SubmitButton label={currency === 'USD' ? 'Confirm Order' : 'Lanjut ke Pembayaran'} />
 
                 <p className="text-xs text-center text-green-400 mt-4">
                     By confirming, you agree to our Terms of Export.
