@@ -51,6 +51,10 @@ model Order {
   trackingNumber  String?
   shippingCourier String? // JNE, J&T, DHL Express
   phytoCertNumber String?
+  // New fields for detail capture
+  name            String?
+  shippingAddress String?
+  paymentMethod   String? @default("Midtrans")
   items           OrderItem[]
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt

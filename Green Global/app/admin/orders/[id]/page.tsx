@@ -20,9 +20,6 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
         return <div className="p-8 text-center">Order not found</div>;
     }
 
-    // Placeholder for address since schema doesn't have it yet
-    const shippingAddress = "Address not captured in V1";
-
     return (
         <div className="space-y-6">
             <div className="flex items-center gap-4 mb-6">
@@ -48,12 +45,16 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
                     </h3>
                     <div className="space-y-2 text-sm">
                         <div className="flex items-start gap-3">
+                            <span className="font-bold text-gray-700 w-5">Nm:</span>
+                            <span className="text-gray-900 font-medium">{order.name || 'Guest'}</span>
+                        </div>
+                        <div className="flex items-start gap-3">
                             <Mail className="w-4 h-4 text-gray-400 mt-0.5" />
                             <span>{order.guestEmail}</span>
                         </div>
                         <div className="flex items-start gap-3">
                             <MapPin className="w-4 h-4 text-gray-400 mt-0.5" />
-                            <span className="text-gray-600 whitespace-pre-wrap">{shippingAddress}</span>
+                            <span className="text-gray-600 whitespace-pre-wrap">{order.shippingAddress || 'No address provided'}</span>
                         </div>
                     </div>
                 </div>
@@ -75,21 +76,30 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
                             <span className="font-bold text-xl">${order.totalUsd.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between text-xs text-gray-400">
-                            {/* Placeholder for payment method if captured */}
-                            <span>Via Midtrans</span>
+                            <span>Via {order.paymentMethod || 'Midtrans'}</span>
                         </div>
                     </div>
                 </div>
 
-                {/* Shipping Info Placeholder */}
+                {/* Shipping Info */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-4">
                     <h3 className="font-bold text-gray-900 flex items-center gap-2">
                         <Truck className="w-5 h-5 text-gray-400" /> Shipping Details
                     </h3>
+                    <div className="text-sm space-y-2">
+                        <div className="flex justify-between">
+                            <span className="text-gray-500">Courier</span>
+                            <span className="font-bold text-green-800">{order.shippingCourier || 'Not selected'}</span>
+                        </div>
+                        <div className="flex justify-between">
+                            <span className="text-gray-500">Tracking</span>
+                            <span className="font-mono text-xs">{order.trackingNumber || '-'}</span>
+                        </div>
+                    </div>
                     {order.status === 'SHIPPED' ? (
-                        <div className="text-green-600 font-medium">Order marked sent.</div>
+                        <div className="text-green-600 font-medium text-xs mt-2 border-t pt-2">Order marked sent.</div>
                     ) : (
-                        <div className="text-gray-500 text-sm">Action required: Generate Label</div>
+                        <div className="text-gray-500 text-xs mt-2 border-t pt-2">Action required: Generate Label</div>
                     )}
                 </div>
             </div>

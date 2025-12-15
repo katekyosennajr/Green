@@ -15,6 +15,9 @@ interface CartItem {
 export async function createOrder(prevState: unknown, formData: FormData) {
     try {
         const email = formData.get('email') as string;
+        const name = formData.get('name') as string;
+        const address = formData.get('address') as string;
+        const country = formData.get('country') as string;
         const cartItemsJson = formData.get('cartItems') as string;
         const totalUsd = parseFloat(formData.get('totalUsd') as string);
         const shippingCourier = formData.get('courier') as string;
@@ -31,7 +34,10 @@ export async function createOrder(prevState: unknown, formData: FormData) {
                 totalUsd,
                 status: 'PENDING',
                 guestEmail: email,
+                name: name,
+                shippingAddress: `${address}, ${country}`,
                 shippingCourier: shippingCourier,
+                paymentMethod: 'Midtrans', // Default for now, or derive if needed
                 // Jika login, kita akan lampirkan userId di sini
                 items: {
                     create: cartItems.map((item) => ({
