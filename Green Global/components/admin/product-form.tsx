@@ -28,8 +28,8 @@ export function ProductForm() {
                 setIsSuccess(true);
                 setMessage(result.message || 'Product created!');
 
-                // Allow user to see success message briefly or redirect immediately?
-                // Redirect immediately as per standard flow
+                // Redirect ke halaman list produk setelah sukses
+
                 router.refresh();
                 router.push('/admin/products');
             } else {
@@ -89,9 +89,17 @@ export function ProductForm() {
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-green-800 mb-1">Image URLs (Comma separated)</label>
-                <input name="images" required className="w-full border border-green-200 rounded-lg p-2.5 focus:ring-2 focus:ring-gold-500 focus:outline-none" placeholder="https://..., https://..." />
-                <p className="text-xs text-green-500 mt-1">Use external URLs for this V1 demo.</p>
+                <label className="block text-sm font-medium text-green-800 mb-1">Upload Images</label>
+                <div className="border border-green-200 border-dashed rounded-lg p-6 flex flex-col items-center justify-center bg-green-50/50 hover:bg-green-50 transition-colors">
+                    <input
+                        type="file"
+                        name="imageFiles"
+                        multiple
+                        accept="image/*"
+                        className="w-full text-sm text-green-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-green-100 file:text-green-700 hover:file:bg-green-200"
+                    />
+                    <p className="text-xs text-green-500 mt-2">Select one or more images (JPG, PNG)</p>
+                </div>
             </div>
 
             <div>

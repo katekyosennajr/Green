@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { RevenueAnalytics } from '@/components/admin/revenue-analytics';
 import { AutoRefresh } from '@/components/admin/auto-refresh';
+import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
@@ -105,10 +106,10 @@ export default async function AdminDashboard() {
                     <h3 className="font-bold text-lg mb-2">Manage Products</h3>
                     <p className="text-green-600 text-sm">Add new plants, update stock & prices.</p>
                 </a>
-                <a href="/admin/users" className="block p-6 bg-white border border-green-200 text-green-900 rounded-xl shadow-sm hover:border-green-500 transition-colors">
+                <Link href="/admin/customers" className="block p-6 bg-white border border-green-200 text-green-900 rounded-xl shadow-sm hover:border-green-500 transition-colors">
                     <h3 className="font-bold text-lg mb-2">Customer List</h3>
                     <p className="text-green-600 text-sm">View registered users and history.</p>
-                </a>
+                </Link>
             </div>
 
             {/* Recent Activity */}

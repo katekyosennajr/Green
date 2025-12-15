@@ -22,7 +22,7 @@ export function SiteHeader() {
                     </span>
                 </Link>
 
-                {/* Desktop Navigation */}
+                {/* Navigasi Desktop */}
                 <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-green-900">
                     <Link href="/catalog" className="hover:text-gold-600 transition-colors">
                         Catalog
@@ -35,7 +35,7 @@ export function SiteHeader() {
                     </Link>
                 </nav>
 
-                {/* Actions */}
+                {/* Aksi / Tombol */}
                 <div className="flex items-center space-x-4">
 
                     {/* Currency / Lang (Mock) */}
@@ -82,7 +82,7 @@ export function SiteHeader() {
                 </div>
             </div>
 
-            {/* Mobile Menu */}
+            {/* Menu Mobile */}
             {isMenuOpen && (
                 <div className="md:hidden border-t border-green-100 bg-white p-4 space-y-4">
                     <Link href="/catalog" className="block text-green-900 font-medium">Catalog</Link>

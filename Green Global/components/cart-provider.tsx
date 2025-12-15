@@ -33,7 +33,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: ReactNode }) {
     const [items, setItems] = useState<CartItem[]>([]);
 
-    // Load from local storage
+    // Muat data keranjang dari local storage
     useEffect(() => {
         const saved = localStorage.getItem('cart');
         if (saved) {
@@ -41,12 +41,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
                 // eslint-disable-next-line
                 setItems(JSON.parse(saved));
             } catch (e) {
-                console.error("Failed to parse cart", e);
+                console.error("Gagal memparsing keranjang", e);
             }
         }
     }, []);
 
-    // Save to local storage
+    // Simpan data keranjang ke local storage
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(items));
     }, [items]);

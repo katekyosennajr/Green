@@ -49,6 +49,7 @@ model Order {
   status          String      @default("PENDING") // PENDING, PROCESSING, PHYTO_IN_PROGRESS, SHIPPED, DELIVERED
   paymentStatus   String      @default("UNPAID")
   trackingNumber  String?
+  shippingCourier String? // JNE, J&T, DHL Express
   phytoCertNumber String?
   items           OrderItem[]
   createdAt       DateTime    @default(now())

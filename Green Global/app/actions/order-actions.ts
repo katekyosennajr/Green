@@ -17,6 +17,7 @@ export async function createOrder(prevState: unknown, formData: FormData) {
         const email = formData.get('email') as string;
         const cartItemsJson = formData.get('cartItems') as string;
         const totalUsd = parseFloat(formData.get('totalUsd') as string);
+        const shippingCourier = formData.get('courier') as string;
 
         if (!cartItemsJson) {
             return { message: 'Cart is empty', success: false };
@@ -24,12 +25,13 @@ export async function createOrder(prevState: unknown, formData: FormData) {
 
         const cartItems: CartItem[] = JSON.parse(cartItemsJson);
 
-        // Create the order
+        // Buat pesanan baru di database
         const order = await prisma.order.create({
             data: {
                 totalUsd,
                 status: 'PENDING',
-                guestEmail: email, // Saat ini kita izinkan checkout tamu
+                guestEmail: email,
+                shippingCourier: shippingCourier,
                 // Jika login, kita akan lampirkan userId di sini
                 items: {
                     create: cartItems.map((item) => ({
@@ -49,11 +51,7 @@ export async function createOrder(prevState: unknown, formData: FormData) {
             });
         }
 
-        // --- Integrasi Pembayaran ---
-        // Kita hanya generate token jika mata uang IDR (batasan Midtrans biasanya) atau jika kita konversi ketat.
-        // Untuk demo ini, kita asumsikan totalUsd dikonversi ke IDR atau dipakai langsung jika didukung.
-        // Asumsi: Konversi ke IDR (karena Midtrans basis Indo).
-        // 1 USD kira-kira 16.000 IDR.
+        // Integrasi Pembayaran: Konversi USD ke IDR untuk Midtrans (rate tetap untuk demo)
         const rate = 16000;
         const amountIdr = totalUsd * rate;
 
@@ -62,6 +60,22 @@ export async function createOrder(prevState: unknown, formData: FormData) {
         const paymentToken = await createPaymentToken(order.id, amountIdr, { email });
 
         revalidatePath('/admin/orders');
+        // Revalidasi frontend agar stok terbaru tampil di katalog dan beranda
+        revalidatePath('/catalog');
+
+
+        revalidatePath('/');
+
+        // Ambil slug produk untuk revalidasi halaman detail spesifik
+        const productIds = cartItems.map(i => i.id);
+        const products = await prisma.product.findMany({
+            where: { id: { in: productIds } },
+            select: { slug: true }
+        });
+
+        for (const p of products) {
+            revalidatePath(`/product/${p.slug}`);
+        }
         return {
             message: 'Order placed successfully!',
             success: true,

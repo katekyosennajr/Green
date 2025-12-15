@@ -5,10 +5,10 @@ export function HeroSection() {
     return (
         <section className="relative w-full overflow-hidden bg-green-950 text-cream-50">
 
-            {/* Background with Overlay (simulated image) */}
+            {/* Background dengan Overlay (gambar simulasi) */}
             <div className="absolute inset-0 bg-green-900/40 z-0">
                 <div className="absolute inset-0 bg-gradient-to-r from-green-950/90 via-green-950/40 to-transparent"></div>
-                {/* Placeholder for real hero image - using a subtle pattern/gradient for now */}
+                {/* Placeholder simulasi, ganti dengan gambar asli nanti */}
                 <div className="w-full h-full bg-[url('https://images.unsplash.com/photo-1597843003057-7977a419c836?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay opacity-50"></div>
             </div>
 
@@ -48,7 +48,7 @@ export function HeroSection() {
                 </div>
             </div>
 
-            {/* Credibility Bar */}
+            {/* Bar Kredibilitas */}
             <div className="relative z-20 border-t border-white/10 bg-green-950/80 backdrop-blur-md">
                 <div className="container mx-auto px-4 py-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">

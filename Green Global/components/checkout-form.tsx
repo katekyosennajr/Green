@@ -2,10 +2,10 @@
 
 import { createOrder } from '@/app/actions/order-actions';
 import { useCart } from '@/components/cart-provider';
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { useEffect, useRef, useState } from 'react';
 import { Loader2, CheckCircle } from 'lucide-react';
-import { useFormStatus } from 'react-dom';
 import Script from 'next/script';
 
 // Tambah tipe global untuk Snap
@@ -61,7 +61,7 @@ interface CheckoutFormProps {
 export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
     const { items, clearCart } = useCart();
     const { currency } = useCurrency();
-    const [state, formAction] = useFormState(createOrder, initialState);
+    const [state, formAction] = useActionState(createOrder, initialState);
     const formRef = useRef<HTMLFormElement>(null);
     const [country, setCountry] = useState('International'); // Default ke Internasional sesuai fokus ekspor
 
