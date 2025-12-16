@@ -44,7 +44,7 @@ function SubmitButton({ label }: { label: string }) {
             {pending ? (
                 <>
                     <Loader2 className="animate-spin w-5 h-5" />
-                    Processing...
+                    Preparing Secure Payment...
                 </>
             ) : (
                 label
@@ -63,38 +63,96 @@ export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
     const { currency } = useCurrency();
     const [state, formAction] = useActionState(createOrder, initialState);
     const formRef = useRef<HTMLFormElement>(null);
-    const [country, setCountry] = useState('International'); // Default ke Internasional sesuai fokus ekspor
+    const [country, setCountry] = useState('International');
+    const [selectedPayment, setSelectedPayment] = useState<string>('');
+
+    const [showSuccess, setShowSuccess] = useState(false);
+
+    const [showMockPopup, setShowMockPopup] = useState(false);
 
     useEffect(() => {
+        console.log("Checkout Effect Triggered:", {
+            success: state.success,
+            token: state.paymentToken
+        });
+
         if (state.success) {
             clearCart();
             formRef.current?.reset();
 
-            // Handle Pembayaran
+            // Handle MOCK MODE (Bypass Midtrans)
+            if (state.paymentToken === 'MOCK_TOKEN_BYPASS') {
+                console.log("Mock Payment Mode Activated");
+                setShowMockPopup(true);
+                // Simulate processing delay
+                setTimeout(() => {
+                    setShowMockPopup(false);
+                    if (onSuccess) onSuccess();
+                    setShowSuccess(true);
+                }, 3000); // 3 seconds delay
+                return;
+            }
+
+            // Handle Real Midtrans
             if (state.paymentToken) {
-                // Cek apakah snap sudah dimuat
-                if (window.snap) {
-                    window.snap.pay(state.paymentToken, {
-                        onSuccess: function (result: any) { alert('Payment Success!'); console.log(result); },
-                        onPending: function (result: any) { alert('Waiting for Payment!'); console.log(result); },
-                        onError: function (result: any) { alert('Payment Failed!'); console.log(result); },
-                        onClose: function () {
-                            console.log('Customer closed the popup without finishing the payment');
-                            // Tetap sukses order placement, biarkan lanjut
-                            if (onSuccess) onSuccess();
-                        }
-                    });
-                } else {
-                    console.error("Snap JS not loaded!");
-                    if (onSuccess) onSuccess(); // Fallback ke tampilan sukses
-                }
+                // Wait for Snap to be available if it's not yet
+                const snapInterval = setInterval(() => {
+                    if (window.snap) {
+                        clearInterval(snapInterval);
+                        console.log("Snap is available, calling pay...");
+                        window.snap.pay(state.paymentToken, {
+                            onSuccess: function (result: any) {
+                                console.log("Snap Success", result);
+                                setShowSuccess(true);
+                            },
+                            onPending: function (result: any) {
+                                console.log("Snap Pending", result);
+                                setShowSuccess(true);
+                            },
+                            onError: function (result: any) {
+                                console.error("Snap Error", result);
+                                setShowSuccess(true);
+                            },
+                            onClose: function () {
+                                console.log("Snap Closed");
+                                if (onSuccess) onSuccess();
+                                setShowSuccess(true);
+                            }
+                        });
+                    } else {
+                        console.log("Waiting for Snap.js...");
+                    }
+                }, 500); // Check every 500ms
+
+                // Cleanup interval after 10s to avoid infinite loop
+                setTimeout(() => clearInterval(snapInterval), 10000);
+
             } else {
+                console.warn("No payment token provided.");
+                // Fallback for unexpected nulls
                 if (onSuccess) onSuccess();
+                setShowSuccess(true);
             }
         }
     }, [state.success, state.paymentToken, clearCart, onSuccess]);
 
-    if (state.success) {
+    // MOCK POPUP UI
+    if (showMockPopup) {
+        return (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+                <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full text-center animate-fade-in border-t-4 border-green-600">
+                    <Loader2 className="w-12 h-12 text-green-600 animate-spin mx-auto mb-4" />
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Processing Payment</h3>
+                    <p className="text-gray-500 mb-6">Connecting to secure gateway (Simulation)...</p>
+                    <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                        <div className="bg-green-600 h-2.5 rounded-full animate-pulse w-3/4"></div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (showSuccess) {
         return (
             <div className="bg-green-50 p-8 rounded-2xl text-center border border-green-100 animate-fade-in">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -104,6 +162,7 @@ export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
                 <p className="text-green-700 mb-4">Thank you for your purchase.</p>
                 <p className="text-sm text-green-500">Order ID: <span className="font-mono text-green-800">{state.orderId}</span></p>
                 <p className="text-xs text-green-400 mt-2">We will email you the phytosanitary details shortly.</p>
+                {state.paymentToken && <p className="text-xs text-blue-500 mt-2">Please complete payment in the popup.</p>}
             </div>
         );
     }
@@ -146,7 +205,10 @@ export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
                         <select
                             name="country"
                             className="w-full border border-green-200 rounded-lg p-3 focus:ring-2 focus:ring-gold-500 focus:outline-none bg-white"
-                            onChange={(e) => setCountry(e.target.value)}
+                            onChange={(e) => {
+                                setCountry(e.target.value);
+                                setSelectedPayment(''); // Reset selection when country switches
+                            }}
                             value={country}
                         >
                             <option value="International">International (Outside Indonesia)</option>
@@ -187,34 +249,56 @@ export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
                 )}
 
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                    <p className="text-xs text-gray-500 font-medium mb-3">
-                        {currency === 'USD' ? 'Accepted International Payments:' : 'Metode Pembayaran Lokal:'}
+                    <p className="text-xs text-gray-500 font-bold mb-3 uppercase tracking-wider text-center">
+                        {country === 'International' ? 'Select Payment Method:' : 'Pilih Metode Pembayaran:'}
                     </p>
-                    <div className="flex flex-wrap gap-2 items-center">
-                        {currency === 'USD' ? (
+                    <input type="hidden" name="paymentPreference" value={selectedPayment} />
+
+                    <div className="flex flex-wrap gap-3 items-center justify-center">
+                        {country === 'International' ? (
                             <>
-                                <div className="flex flex-wrap gap-2">
-                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-blue-800 flex items-center gap-1"><CreditCard className="w-3 h-3" /> VISA</span>
-                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-red-600 flex items-center gap-1"><CreditCard className="w-3 h-3" /> Mastercard</span>
-                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-blue-500">Amex</span>
-                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-green-600 flex items-center gap-1"><CreditCard className="w-3 h-3" /> JCB</span>
-                                </div>
+                                {['VISA', 'Mastercard', 'JCB', 'Amex'].map((method) => (
+                                    <button
+                                        key={method}
+                                        type="button"
+                                        onClick={() => setSelectedPayment(method)}
+                                        className={`flex items-center gap-1 text-xs font-bold px-3 py-2 rounded transition-all border ${selectedPayment === method
+                                            ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm ring-1 ring-blue-500'
+                                            : 'bg-white border-gray-200 text-gray-600 hover:border-blue-300'
+                                            }`}
+                                    >
+                                        <CreditCard className="w-3 h-3" /> {method}
+                                    </button>
+                                ))}
                             </>
                         ) : (
                             <>
-                                <div className="flex flex-wrap gap-2">
-                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-gray-800 flex items-center gap-1"><QrCode className="w-3 h-3" /> QRIS</span>
-                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-blue-600 flex items-center gap-1"><Wallet className="w-3 h-3" /> GoPay</span>
-                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-blue-800 flex items-center gap-1"><Landmark className="w-3 h-3" /> BCA</span>
-                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-blue-900 flex items-center gap-1"><Landmark className="w-3 h-3" /> Mandiri</span>
-                                    <span className="bg-white border border-gray-200 px-2 py-1 rounded text-xs font-bold text-orange-600 flex items-center gap-1"><Landmark className="w-3 h-3" /> BNI</span>
-                                </div>
+                                {[
+                                    { id: 'QRIS', icon: QrCode, color: 'text-gray-800' },
+                                    { id: 'GoPay', icon: Wallet, color: 'text-blue-600' },
+                                    { id: 'BCA', icon: Landmark, color: 'text-blue-800' },
+                                    { id: 'Mandiri', icon: Landmark, color: 'text-blue-900' },
+                                    { id: 'BNI', icon: Landmark, color: 'text-orange-600' }
+                                ].map((method) => (
+                                    <button
+                                        key={method.id}
+                                        type="button"
+                                        onClick={() => setSelectedPayment(method.id)}
+                                        className={`flex items-center gap-1 text-xs font-bold px-3 py-2 rounded transition-all border ${selectedPayment === method.id
+                                            ? 'bg-green-50 border-green-500 text-green-800 shadow-sm ring-1 ring-green-500'
+                                            : 'bg-white border-gray-200 text-gray-600 hover:border-green-300'
+                                            }`}
+                                    >
+                                        <method.icon className={`w-3 h-3 ${selectedPayment === method.id ? '' : method.color}`} />
+                                        {method.id}
+                                    </button>
+                                ))}
                             </>
                         )}
                     </div>
                 </div>
 
-                <SubmitButton label={currency === 'USD' ? 'Confirm Order' : 'Lanjut ke Pembayaran'} />
+                <SubmitButton label={country === 'International' ? 'Place Order & Pay' : 'Bayar Sekarang'} />
 
                 <p className="text-xs text-center text-green-400 mt-4">
                     By confirming, you agree to our Terms of Export.

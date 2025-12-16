@@ -9,7 +9,17 @@ export const dynamic = 'force-dynamic';
 
 export default async function CustomerListPage() {
     // Fetch all orders to derive customer data
+    // Fetch confirmed orders only (PAID or SHIPPED)
     const orders = await prisma.order.findMany({
+        where: {
+            OR: [
+                { paymentStatus: 'PAID' },
+                { status: 'SHIPPED' },
+                { status: 'DELIVERED' },
+                { status: 'PROCESSING' },
+                { status: 'PHYTO_IN_PROGRESS' } // Also count these as active/confirmed
+            ]
+        },
         orderBy: { createdAt: 'desc' },
         include: { user: true }
     });

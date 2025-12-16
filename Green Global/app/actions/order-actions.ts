@@ -21,6 +21,7 @@ export async function createOrder(prevState: unknown, formData: FormData) {
         const cartItemsJson = formData.get('cartItems') as string;
         const totalUsd = parseFloat(formData.get('totalUsd') as string);
         const shippingCourier = formData.get('courier') as string;
+        const paymentPreference = formData.get('paymentPreference') as string;
 
         if (!cartItemsJson) {
             return { message: 'Cart is empty', success: false };
@@ -37,7 +38,7 @@ export async function createOrder(prevState: unknown, formData: FormData) {
                 name: name,
                 shippingAddress: `${address}, ${country}`,
                 shippingCourier: shippingCourier,
-                paymentMethod: 'Midtrans', // Default for now, or derive if needed
+                paymentMethod: paymentPreference || 'Midtrans', // Use preference or fallback
                 // Jika login, kita akan lampirkan userId di sini
                 items: {
                     create: cartItems.map((item) => ({

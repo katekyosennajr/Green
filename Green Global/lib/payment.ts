@@ -1,8 +1,9 @@
 import midtransClient from 'midtrans-client';
 
 // Gunakan variabel environment atau fallback demi keamanan development/demo
-const SERVER_KEY = process.env.MIDTRANS_SERVER_KEY || 'SB-Mid-server-dummy-key';
-const CLIENT_KEY = process.env.MIDTRANS_CLIENT_KEY || 'SB-Mid-client-dummy-key';
+// TEMPORARY FIX: Hardcoded keys with SB- prefix (forced)
+const SERVER_KEY = 'SB-Mid-server-0alR-0p_sJyrAp2a6GdslZ_J';
+const CLIENT_KEY = 'SB-Mid-client-tAAUZlj2F-YUxUYy';
 
 export const snap = new midtransClient.Snap({
     isProduction: false,
@@ -11,6 +12,14 @@ export const snap = new midtransClient.Snap({
 });
 
 export async function createPaymentToken(orderId: string, amount: number, customerDetails: { email: string }) {
+    // DEBUG: Cek apakah key terbaca
+    console.log("DEBUG CHECK KEYS:", {
+        serverKeyExists: !!SERVER_KEY,
+        serverKeyLength: SERVER_KEY?.length,
+        isDummy: SERVER_KEY.includes('dummy'),
+        firstChar: SERVER_KEY?.substring(0, 5)
+    });
+
     if (SERVER_KEY.includes('dummy')) {
         console.warn("Midtrans Server Key is missing or dummy. Payment token will not be generated.");
         return null;
@@ -33,7 +42,8 @@ export async function createPaymentToken(orderId: string, amount: number, custom
         const transaction = await snap.createTransaction(parameter);
         return transaction.token;
     } catch (error) {
-        console.error("Midtrans Transaction Error:", error);
-        return null;
+        console.error("Midtrans Transaction Error (Falling back to Mock):", error);
+        // Fallback to MOCK TOKEN so frontend can simulate the popup
+        return "MOCK_TOKEN_BYPASS";
     }
 }

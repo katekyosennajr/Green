@@ -19,9 +19,23 @@ export default async function CustomerInsightPage(props: Props) {
     // Fetch orders by email (Guest or User)
     const orders = await prisma.order.findMany({
         where: {
-            OR: [
-                { guestEmail: decodedEmail },
-                { user: { email: decodedEmail } }
+            AND: [
+                {
+                    OR: [
+                        { guestEmail: decodedEmail },
+                        { user: { email: decodedEmail } }
+                    ]
+                },
+                {
+                    // Filter stats to only include confirmed orders
+                    OR: [
+                        { paymentStatus: 'PAID' },
+                        { status: 'SHIPPED' },
+                        { status: 'DELIVERED' },
+                        { status: 'PROCESSING' },
+                        { status: 'PHYTO_IN_PROGRESS' }
+                    ]
+                }
             ]
         },
         orderBy: { createdAt: 'desc' },
