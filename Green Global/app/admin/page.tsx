@@ -126,7 +126,14 @@ export default async function AdminDashboard() {
                             <div key={order.id} className="p-4 flex justify-between items-center hover:bg-green-50">
                                 <div>
                                     <p className="font-bold text-sm text-green-900">Order #{order.id.slice(0, 8)}</p>
-                                    <p className="text-xs text-green-600">{order.guestEmail} • ${order.totalUsd}</p>
+                                    <p className="text-xs text-green-600">
+                                        {order.guestEmail} •{' '}
+                                        {order.currency === 'IDR' ? (
+                                            new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(order.paymentTotal || order.totalUsd * 16000)
+                                        ) : (
+                                            new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(order.totalUsd)
+                                        )}
+                                    </p>
                                 </div>
                                 <span className={`px-2 py-1 rounded text-xs font-bold ${order.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
                                     {order.status}

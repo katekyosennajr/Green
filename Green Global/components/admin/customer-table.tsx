@@ -21,21 +21,13 @@ type SortKey = 'email' | 'totalOrders' | 'totalSpend' | 'lastOrderDate';
 export function CustomerTable({ customers: initialCustomers }: Props) {
     const [sortKey, setSortKey] = useState<SortKey>('lastOrderDate');
     const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
+    const [currency, setCurrency] = useState<'USD' | 'IDR'>('USD');
 
     const handleSort = (key: SortKey) => {
         if (sortKey === key) {
             setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
         } else {
             setSortKey(key);
-            setSortDir('asc'); // Default to asc for new column? User said asc or desc. Usually text asc, numbers desc. 
-            // Let's just toggle. But user asked for sort.
-            // Logic: if clicking new, start asc? Or maybe context aware?
-            // "total numbers" usually want DESC (highest first). "Email" usually ASC. 
-            // I'll stick to simple toggle starting ASC for simplicity, or DESC if it was already active elsewhere.
-            // Actually, let's stick to standard behavior: first click -> asc, second -> desc.
-            // Except for logic where numbers usually imply "top" -> desc. 
-            // I'll stick to standard: click -> asc (except maybe dates? default desc).
-            // Let's implement generic toggle.
             setSortDir('asc');
         }
     };
@@ -56,6 +48,15 @@ export function CustomerTable({ customers: initialCustomers }: Props) {
                 return 0;
         }
     });
+
+    const convert = (val: number) => currency === 'IDR' ? val * 16000 : val;
+    const formatCurrency = (val: number) => {
+        return new Intl.NumberFormat(currency === 'IDR' ? 'id-ID' : 'en-US', {
+            style: 'currency',
+            currency: currency,
+            maximumFractionDigits: 2
+        }).format(val);
+    };
 
     const SortIcon = ({ colKey }: { colKey: SortKey }) => {
         if (sortKey !== colKey) return <div className="w-4 h-4" />; // Placeholder for layout stability or just hidden
@@ -95,11 +96,11 @@ export function CustomerTable({ customers: initialCustomers }: Props) {
     }
 
     const downloadCSV = () => {
-        const headers = ['Email', 'Total Orders', 'Total Spend (USD)', 'Last Active'];
+        const headers = ['Email', 'Total Orders', `Total Spend (${currency})`, 'Last Active'];
         const rows = sortedCustomers.map(c => [
             c.email,
             c.totalOrders,
-            c.totalSpend.toFixed(2),
+            convert(c.totalSpend).toFixed(2),
             new Date(c.lastOrderDate).toLocaleDateString()
         ]);
 
@@ -121,12 +122,34 @@ export function CustomerTable({ customers: initialCustomers }: Props) {
 
     return (
         <div>
-            <div className="p-4 flex justify-end bg-white border-b border-green-50">
+            <div className="p-4 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white border-b border-green-50">
+                {/* Currency Toggle */}
+                <div className="flex bg-green-50 rounded-lg p-1 border border-green-100">
+                    <button
+                        onClick={() => setCurrency('USD')}
+                        className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${currency === 'USD'
+                            ? 'bg-white text-green-800 shadow-sm ring-1 ring-green-200'
+                            : 'text-green-600 hover:text-green-800'
+                            }`}
+                    >
+                        USD ($)
+                    </button>
+                    <button
+                        onClick={() => setCurrency('IDR')}
+                        className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${currency === 'IDR'
+                            ? 'bg-white text-green-800 shadow-sm ring-1 ring-green-200'
+                            : 'text-green-600 hover:text-green-800'
+                            }`}
+                    >
+                        IDR (Rp)
+                    </button>
+                </div>
+
                 <button
                     onClick={downloadCSV}
                     className="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors text-xs font-bold uppercase tracking-wider"
                 >
-                    <ArrowDown className="w-4 h-4" /> Export CSV
+                    <ArrowDown className="w-4 h-4" /> Export CSV ({currency})
                 </button>
             </div>
             <table className="w-full text-left border-collapse">
@@ -134,7 +157,7 @@ export function CustomerTable({ customers: initialCustomers }: Props) {
                     <tr>
                         <HeaderCell label="Customer (Email)" colKey="email" />
                         <HeaderCell label="Total Orders" colKey="totalOrders" />
-                        <HeaderCell label="Total Spend (USD)" colKey="totalSpend" />
+                        <HeaderCell label={`Total Spend (${currency})`} colKey="totalSpend" />
                         <HeaderCell label="Last Active" colKey="lastOrderDate" />
                         <th className="p-4 border-b border-green-100">Actions</th>
                     </tr>
@@ -156,7 +179,7 @@ export function CustomerTable({ customers: initialCustomers }: Props) {
                                 {cust.totalOrders}
                             </td>
                             <td className="p-4 text-sm font-bold text-green-900">
-                                {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cust.totalSpend)}
+                                {formatCurrency(convert(cust.totalSpend))}
                             </td>
                             <td className="p-4 text-sm text-green-600">
                                 {new Date(cust.lastOrderDate).toLocaleDateString(undefined, {
