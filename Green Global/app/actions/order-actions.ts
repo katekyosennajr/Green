@@ -19,9 +19,23 @@ export async function createOrder(prevState: unknown, formData: FormData) {
         const address = formData.get('address') as string;
         const country = formData.get('country') as string;
         const cartItemsJson = formData.get('cartItems') as string;
-        const totalUsd = parseFloat(formData.get('totalUsd') as string);
+        const rawTotal = parseFloat(formData.get('totalAmount') as string);
+        const currency = formData.get('currency') as string || 'USD';
         const shippingCourier = formData.get('courier') as string;
         const paymentPreference = formData.get('paymentPreference') as string;
+
+        let totalUsd = 0;
+        let paymentTotal = rawTotal;
+        const rate = 16000;
+
+        // Calculate Normalized USD and Payment Total
+        if (currency === 'IDR') {
+            totalUsd = rawTotal / rate;
+            paymentTotal = rawTotal;
+        } else {
+            totalUsd = rawTotal;
+            paymentTotal = rawTotal;
+        }
 
         if (!cartItemsJson) {
             return { message: 'Cart is empty', success: false };
@@ -32,19 +46,20 @@ export async function createOrder(prevState: unknown, formData: FormData) {
         // Buat pesanan baru di database
         const order = await prisma.order.create({
             data: {
-                totalUsd,
+                totalUsd, // Normalized for stats
+                paymentTotal, // Actual paid amount
+                currency, // 'IDR' or 'USD'
                 status: 'PENDING',
                 guestEmail: email,
                 name: name,
                 shippingAddress: `${address}, ${country}`,
                 shippingCourier: shippingCourier,
-                paymentMethod: paymentPreference || 'Midtrans', // Use preference or fallback
-                // Jika login, kita akan lampirkan userId di sini
+                paymentMethod: paymentPreference || 'Midtrans',
                 items: {
                     create: cartItems.map((item) => ({
                         productId: item.id,
                         quantity: item.quantity,
-                        priceUsd: item.price
+                        priceUsd: item.price // Cart always sends USD price, so no conversion needed here
                     }))
                 }
             }
@@ -58,9 +73,9 @@ export async function createOrder(prevState: unknown, formData: FormData) {
             });
         }
 
-        // Integrasi Pembayaran: Konversi USD ke IDR untuk Midtrans (rate tetap untuk demo)
-        const rate = 16000;
-        const amountIdr = totalUsd * rate;
+        // Integrasi Pembayaran
+        // Jika IDR, pakai langsung. Jika USD, konversi ke IDR untuk Midtrans.
+        const amountIdr = currency === 'IDR' ? paymentTotal : (paymentTotal * rate);
 
         // Import dinamis untuk menghindari masalah require jika ada
         const { createPaymentToken } = await import('@/lib/payment');

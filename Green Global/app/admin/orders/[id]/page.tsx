@@ -73,7 +73,13 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
                         </div>
                         <div className="flex justify-between">
                             <span className="text-gray-500">Total Amount</span>
-                            <span className="font-bold text-xl">${order.totalUsd.toFixed(2)}</span>
+                            <span className="font-bold text-xl">
+                                {order.currency === 'IDR' ? (
+                                    new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(order.paymentTotal)
+                                ) : (
+                                    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(order.totalUsd)
+                                )}
+                            </span>
                         </div>
                         <div className="flex justify-between text-xs text-gray-400">
                             <span>Via {order.paymentMethod || 'Midtrans'}</span>
@@ -122,25 +128,40 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
-                        {order.items.map((item) => (
-                            <tr key={item.id}>
-                                <td className="px-6 py-4 font-medium text-gray-900">
-                                    {item.product.name}
-                                </td>
-                                <td className="px-6 py-4 text-xs text-gray-500 font-mono">
-                                    {item.productId.slice(0, 8)}
-                                </td>
-                                <td className="px-6 py-4 text-right text-gray-600">
-                                    ${item.priceUsd.toFixed(2)}
-                                </td>
-                                <td className="px-6 py-4 text-right text-gray-600">
-                                    {item.quantity}
-                                </td>
-                                <td className="px-6 py-4 text-right font-bold text-gray-900">
-                                    ${(item.priceUsd * item.quantity).toFixed(2)}
-                                </td>
-                            </tr>
-                        ))}
+                        {order.items.map((item) => {
+                            // Calculate display price
+                            const rate = 16000;
+                            const price = order.currency === 'IDR' ? (item.priceUsd * rate) : item.priceUsd;
+                            const total = price * item.quantity;
+
+                            return (
+                                <tr key={item.id}>
+                                    <td className="px-6 py-4 font-medium text-gray-900">
+                                        {item.product.name}
+                                    </td>
+                                    <td className="px-6 py-4 text-xs text-gray-500 font-mono">
+                                        {item.productId.slice(0, 8)}
+                                    </td>
+                                    <td className="px-6 py-4 text-right text-gray-600">
+                                        {order.currency === 'IDR' ? (
+                                            new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(price)
+                                        ) : (
+                                            new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price)
+                                        )}
+                                    </td>
+                                    <td className="px-6 py-4 text-right text-gray-600">
+                                        {item.quantity}
+                                    </td>
+                                    <td className="px-6 py-4 text-right font-bold text-gray-900">
+                                        {order.currency === 'IDR' ? (
+                                            new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(total)
+                                        ) : (
+                                            new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(total)
+                                        )}
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>

@@ -51,6 +51,11 @@ model Order {
   trackingNumber  String?
   shippingCourier String? // JNE, J&T, DHL Express
   phytoCertNumber String?
+  
+  // Multi-Currency Support
+  currency        String      @default("USD") // "USD" or "IDR"
+  paymentTotal    Float       @default(0) // The actual amount paid in the specific currency
+
   // New fields for detail capture
   name            String?
   shippingAddress String?

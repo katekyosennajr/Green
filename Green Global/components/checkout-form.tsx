@@ -181,7 +181,9 @@ export function CheckoutForm({ totalAmount, onSuccess }: CheckoutFormProps) {
             <h3 className="font-serif text-xl font-bold text-green-900 mb-6">Checkout Details</h3>
             <form action={formAction} ref={formRef} className="space-y-4">
                 <input type="hidden" name="cartItems" value={JSON.stringify(items)} />
-                <input type="hidden" name="totalUsd" value={totalAmount} />
+                {/* Logic: If Country is Indonesia, send IDR. Else USD. */}
+                <input type="hidden" name="currency" value={country === 'Indonesia' ? 'IDR' : 'USD'} />
+                <input type="hidden" name="totalAmount" value={country === 'Indonesia' ? (totalAmount * 16000) : totalAmount} />
 
                 <div>
                     <label className="block text-sm font-medium text-green-800 mb-1">Full Name</label>

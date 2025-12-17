@@ -9,6 +9,7 @@ export const dynamic = 'force-dynamic';
 
 import { DateFilter } from '@/components/admin/date-filter';
 import { startOfDay, subDays, startOfWeek, startOfMonth, startOfYear, endOfDay } from 'date-fns';
+import { ExportOrdersButton } from '@/components/admin/export-orders-button';
 
 type Props = {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>
@@ -51,6 +52,11 @@ export default async function AdminOrdersPage(props: Props) {
                 </div>
                 <div className="flex items-center gap-4">
                     <DateFilter />
+                    <ExportOrdersButton orders={orders.map(o => ({
+                        ...o,
+                        // Ensure optional fields are handled for strict typing if needed
+                        guestEmail: o.guestEmail || o.user?.email || null
+                    }))} />
                     <div className="bg-white px-4 py-2 rounded-lg border border-green-100 shadow-sm">
                         <span className="text-sm font-bold text-green-900">Revenue: </span>
                         <span className="text-gold-600 font-mono">
@@ -91,7 +97,11 @@ export default async function AdminOrdersPage(props: Props) {
                                     {order.items.length} items
                                 </td>
                                 <td className="p-4 text-sm font-bold text-green-900">
-                                    ${order.totalUsd.toFixed(2)}
+                                    {order.currency === 'IDR' ? (
+                                        new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(order.paymentTotal || order.totalUsd * 16000)
+                                    ) : (
+                                        new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(order.totalUsd)
+                                    )}
                                 </td>
                                 <td className="p-4">
                                     <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium ${order.paymentStatus === 'PAID' ? 'bg-green-100 text-green-800' :

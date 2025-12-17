@@ -94,8 +94,41 @@ export function CustomerTable({ customers: initialCustomers }: Props) {
         );
     }
 
+    const downloadCSV = () => {
+        const headers = ['Email', 'Total Orders', 'Total Spend (USD)', 'Last Active'];
+        const rows = sortedCustomers.map(c => [
+            c.email,
+            c.totalOrders,
+            c.totalSpend.toFixed(2),
+            new Date(c.lastOrderDate).toLocaleDateString()
+        ]);
+
+        const csvContent = [
+            headers.join(','),
+            ...rows.map(row => row.join(','))
+        ].join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', `customers_export_${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
         <div>
+            <div className="p-4 flex justify-end bg-white border-b border-green-50">
+                <button
+                    onClick={downloadCSV}
+                    className="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors text-xs font-bold uppercase tracking-wider"
+                >
+                    <ArrowDown className="w-4 h-4" /> Export CSV
+                </button>
+            </div>
             <table className="w-full text-left border-collapse">
                 <thead className="bg-green-50 text-green-900 font-bold text-sm uppercase tracking-wider">
                     <tr>
