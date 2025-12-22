@@ -28,12 +28,7 @@ export default function LoginPage() {
             if (result?.error) {
                 setError('Invalid email or password');
             } else {
-                if (email === 'riant.andriansyah97@gmail.com') {
-                    // Force full reload for admin to ensure clean slate layout
-                    window.location.href = '/admin';
-                } else {
-                    window.location.href = '/';
-                }
+                window.location.href = '/';
             }
         } catch {
             setError('An error occurred. Please try again.');
@@ -59,10 +54,10 @@ export default function LoginPage() {
                         </span>
                     </Link>
                     <h2 className="font-serif text-3xl font-bold text-green-900">
-                        Welcome Back
+                        Customer Login
                     </h2>
                     <p className="mt-2 text-sm text-green-600">
-                        Sign in to access your dashboard
+                        Sign in to track orders and more
                     </p>
                 </div>
 
@@ -150,6 +145,15 @@ export default function LoginPage() {
                             </button>
                         </div>
                     </form>
+
+                    <div className="mt-6 text-center">
+                        <p className="text-sm text-green-600">
+                            Don't have an account?{' '}
+                            <Link href="/register" className="font-bold text-green-900 hover:text-gold-600 transition-colors">
+                                Create an account
+                            </Link>
+                        </p>
+                    </div>
                 </div>
 
                 <p className="mt-2 text-center text-xs text-green-500">

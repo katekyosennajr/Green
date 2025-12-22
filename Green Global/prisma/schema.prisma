@@ -16,6 +16,14 @@ model User {
   name      String?
   password  String
   role      String   @default("USER") // USER, ADMIN
+  
+  // Customer Profile Data
+  phone       String?
+  address     String? // Street address
+  city        String?
+  postalCode  String?
+  country     String?
+
   orders    Order[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
