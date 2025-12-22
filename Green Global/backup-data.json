@@ -1,0 +1,1138 @@
+{
+  "users": [
+    {
+      "id": "2054f81e-80a2-4ac2-97ef-dbc5d27dabff",
+      "email": "admin@globalgreen.com",
+      "name": "Admin User",
+      "password": "admin123",
+      "role": "ADMIN",
+      "phone": null,
+      "address": null,
+      "city": null,
+      "postalCode": null,
+      "country": null,
+      "createdAt": "2025-12-09T05:42:29.077Z",
+      "updatedAt": "2025-12-09T05:42:29.077Z"
+    },
+    {
+      "id": "c0ed2767-bde8-4502-b8d6-70c35ecce578",
+      "email": "riant.andriansyah97@gmail.com",
+      "name": "Riant Admin",
+      "password": "$2b$12$kYkSAG13Gsfwh7x0Kgy68eMtF9Gpi6xliDj4wf2GxhjiVD8MRjrfy",
+      "role": "ADMIN",
+      "phone": null,
+      "address": null,
+      "city": null,
+      "postalCode": null,
+      "country": null,
+      "createdAt": "2025-12-10T06:25:51.082Z",
+      "updatedAt": "2025-12-10T06:25:51.082Z"
+    },
+    {
+      "id": "6ac1cf3f-b250-4723-b0b9-2485f77f6106",
+      "email": "yonaamalia322@gmail.com",
+      "name": "yona",
+      "password": "$2b$12$U3HxaTShFua//fZ75ozPV.xkCPwdvuAuyfg46s8i.wmuYIiM9vgOa",
+      "role": "USER",
+      "phone": "+6212345555",
+      "address": "abbe",
+      "city": "BOGOR (KAB)",
+      "postalCode": "16620",
+      "country": "Indonesia",
+      "createdAt": "2025-12-22T05:41:30.268Z",
+      "updatedAt": "2025-12-22T05:48:20.124Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "1887ec6f-405d-4717-a9c5-8719bf4ff82c",
+      "name": "Best Selected - Scindapsus Borneo Tricolor",
+      "scientificName": "Scindapsus pictus var. borneo",
+      "slug": "scindapsus-borneo-tricolor",
+      "description": "A stunning rare aroid from the deep jungles of Borneo. Features iridescent tricolor leaves with splashing silver, dark green, and light mint patterns. Highly sought after by collectors.",
+      "priceUsd": 149,
+      "priceIdr": 2200000,
+      "stock": 20,
+      "images": "[\"/images/products/scindapsus-borneo-tricolor.jpg\", \"/images/products/scindapsus-borneo-2.jpg\"]",
+      "category": "Scindapsus",
+      "isFeatured": true,
+      "shippingInfo": "Shipped bare root with moist sphagnum moss wrapped in plastic. Phyto certificate processing takes 3-5 days.",
+      "phytoIncluded": true,
+      "createdAt": "2025-12-09T05:42:29.064Z",
+      "updatedAt": "2025-12-22T04:10:42.189Z"
+    },
+    {
+      "id": "c4f5ef98-fe95-4017-b1ff-1a7b413ffc89",
+      "name": "Monstera Adansonii Variegated (Archipelago)",
+      "scientificName": "Monstera adansonii variegata",
+      "slug": "monstera-adansonii-variegated",
+      "description": "The \"Archipelago\" variegation is a stable and highly contrasted form of Monstera Adansonii. Features distinct white/yellow sectoral variegation on perforated leaves.",
+      "priceUsd": 450,
+      "priceIdr": 7200000,
+      "stock": 18,
+      "images": "[\"/images/products/monstera-adansonii.png\"]",
+      "category": "Monstera",
+      "isFeatured": true,
+      "shippingInfo": "Shipped in sphagnum moss. Free Phyto.",
+      "phytoIncluded": true,
+      "createdAt": "2025-12-09T07:33:44.098Z",
+      "updatedAt": "2025-12-22T04:10:46.966Z"
+    },
+    {
+      "id": "73714f60-803f-48c2-9f79-0e62983c8b0b",
+      "name": "Monstera Deliciosa Albo Variegata",
+      "scientificName": "Monstera deliciosa var. borsigiana albo",
+      "slug": "monstera-albo",
+      "description": "The classic highly variegated Monstera Albo. Each leaf is unique with splashes of pure white and deep green. A must-have for any serious collector.",
+      "priceUsd": 199,
+      "priceIdr": 3200000,
+      "stock": 10,
+      "images": "[\"/images/products/monstera-albo.png\"]",
+      "category": "Monstera",
+      "isFeatured": true,
+      "shippingInfo": "Shipped bare root. Phyto certificate included.",
+      "phytoIncluded": true,
+      "createdAt": "2025-12-09T07:33:44.103Z",
+      "updatedAt": "2025-12-22T04:10:51.275Z"
+    },
+    {
+      "id": "b3fdb518-42da-4ce1-96c5-509b07d23c77",
+      "name": "Scindapsus Mangurai",
+      "scientificName": "Scindapsus Borneo",
+      "slug": "scindapsus-mango-780",
+      "description": "☀️ Light: Place in bright, indirect light. Avoid direct sunlight as it can scorch the leaves.\r\n\r\n💧 Watering: Water when the top half of the soil feels dry. Be careful not to overwater to prevent root rot.\r\n\r\n💨 Humidity: Thrives in a warm, humid environment with temperatures between 18–24°C (65–75°F).\r\n\r\n🪴 Soil & Potting: Use a well-draining, chunky potting mix with perlite, orchid bark, or sphagnum moss and other airy components to support healthy roots.\r\n\r\n🌱 Growth & Maintenance: Encourage bushier growth and larger leaves by providing a moss pole or plant stake. Regularly remove dead or yellowing leaves to promote new growth.",
+      "priceUsd": 76,
+      "priceIdr": null,
+      "stock": 42,
+      "images": "[\"/uploads/1766377802852-img_5675.jpg\"]",
+      "category": "Scindapsus",
+      "isFeatured": false,
+      "shippingInfo": "Standard DHL Express",
+      "phytoIncluded": true,
+      "createdAt": "2025-12-15T09:22:01.283Z",
+      "updatedAt": "2025-12-22T04:30:02.854Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "e04ec7dc-03d2-4b11-9c4a-4898231fe4ec",
+      "userId": null,
+      "guestEmail": "riantandriansyah92@gmail.com",
+      "totalUsd": 299,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": null,
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": null,
+      "shippingAddress": null,
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-09T07:06:45.630Z",
+      "updatedAt": "2025-12-09T07:06:45.630Z",
+      "items": [
+        {
+          "id": "3e7ca0e9-8762-4678-b3ab-308f7bb7661e",
+          "orderId": "e04ec7dc-03d2-4b11-9c4a-4898231fe4ec",
+          "productId": "1887ec6f-405d-4717-a9c5-8719bf4ff82c",
+          "quantity": 1,
+          "priceUsd": 149
+        }
+      ]
+    },
+    {
+      "id": "61709f6a-64c0-4e76-8b48-44e3fb9f8592",
+      "userId": null,
+      "guestEmail": "riantandriansyah92@gmail.com",
+      "totalUsd": 597,
+      "status": "SHIPPING_READY",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": null,
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": null,
+      "shippingAddress": null,
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-09T07:07:02.292Z",
+      "updatedAt": "2025-12-10T06:58:10.269Z",
+      "items": [
+        {
+          "id": "d67cefbb-5d55-459f-a32d-54bf9ab3356c",
+          "orderId": "61709f6a-64c0-4e76-8b48-44e3fb9f8592",
+          "productId": "1887ec6f-405d-4717-a9c5-8719bf4ff82c",
+          "quantity": 3,
+          "priceUsd": 149
+        }
+      ]
+    },
+    {
+      "id": "71221e9a-cf67-4624-a29d-ba9f0489ad63",
+      "userId": null,
+      "guestEmail": "riantandriansyah92@gmail.com",
+      "totalUsd": 299,
+      "status": "SHIPPING_READY",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": null,
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": null,
+      "shippingAddress": null,
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-09T07:08:05.723Z",
+      "updatedAt": "2025-12-10T06:58:12.327Z",
+      "items": [
+        {
+          "id": "1fd13c26-4031-4f46-b760-f6ffbbf70a1a",
+          "orderId": "71221e9a-cf67-4624-a29d-ba9f0489ad63",
+          "productId": "1887ec6f-405d-4717-a9c5-8719bf4ff82c",
+          "quantity": 1,
+          "priceUsd": 149
+        }
+      ]
+    },
+    {
+      "id": "1732f38a-c853-4657-9b1d-21012715ec77",
+      "userId": null,
+      "guestEmail": "riantandriansyah92@gmail.com",
+      "totalUsd": 299,
+      "status": "SHIPPING_READY",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": null,
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": null,
+      "shippingAddress": null,
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-09T07:14:02.355Z",
+      "updatedAt": "2025-12-10T06:58:13.318Z",
+      "items": [
+        {
+          "id": "3ab5b56b-daaf-4838-a452-6370309e9205",
+          "orderId": "1732f38a-c853-4657-9b1d-21012715ec77",
+          "productId": "1887ec6f-405d-4717-a9c5-8719bf4ff82c",
+          "quantity": 1,
+          "priceUsd": 149
+        }
+      ]
+    },
+    {
+      "id": "b045745c-8829-417d-a246-7674cb4fa128",
+      "userId": null,
+      "guestEmail": "riantandriansyah92@gmail.com",
+      "totalUsd": 448,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": null,
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": null,
+      "shippingAddress": null,
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-09T07:18:29.408Z",
+      "updatedAt": "2025-12-09T07:18:29.408Z",
+      "items": [
+        {
+          "id": "ccdc4d40-4141-4dea-a248-fb32eae4e5e0",
+          "orderId": "b045745c-8829-417d-a246-7674cb4fa128",
+          "productId": "1887ec6f-405d-4717-a9c5-8719bf4ff82c",
+          "quantity": 2,
+          "priceUsd": 149
+        }
+      ]
+    },
+    {
+      "id": "965a91e7-a3d9-480e-b0b8-e03bdf12bedf",
+      "userId": null,
+      "guestEmail": "riantandriansyah92@gmail.com",
+      "totalUsd": 299,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": null,
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": null,
+      "shippingAddress": null,
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-09T07:21:01.455Z",
+      "updatedAt": "2025-12-09T07:21:01.455Z",
+      "items": [
+        {
+          "id": "4957c5aa-d6a0-4660-a6b1-259df7b79d2a",
+          "orderId": "965a91e7-a3d9-480e-b0b8-e03bdf12bedf",
+          "productId": "1887ec6f-405d-4717-a9c5-8719bf4ff82c",
+          "quantity": 1,
+          "priceUsd": 149
+        }
+      ]
+    },
+    {
+      "id": "e6ea2b8b-aa9a-4912-8bd3-a80cb6ab03b2",
+      "userId": null,
+      "guestEmail": "riantandriansyah92@gmail.com",
+      "totalUsd": 749,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": null,
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": null,
+      "shippingAddress": null,
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-09T07:41:31.547Z",
+      "updatedAt": "2025-12-09T07:41:31.547Z",
+      "items": [
+        {
+          "id": "98fd7f76-a674-42fc-9d2a-89db785dfb3b",
+          "orderId": "e6ea2b8b-aa9a-4912-8bd3-a80cb6ab03b2",
+          "productId": "c4f5ef98-fe95-4017-b1ff-1a7b413ffc89",
+          "quantity": 1,
+          "priceUsd": 450
+        },
+        {
+          "id": "f1ebade2-a18c-4a15-91f7-ef29e749e3bd",
+          "orderId": "e6ea2b8b-aa9a-4912-8bd3-a80cb6ab03b2",
+          "productId": "1887ec6f-405d-4717-a9c5-8719bf4ff82c",
+          "quantity": 1,
+          "priceUsd": 149
+        }
+      ]
+    },
+    {
+      "id": "9db0df54-e383-48d2-b2b6-f04ac3c5876b",
+      "userId": null,
+      "guestEmail": "riantandriansyah92@gmail.com",
+      "totalUsd": 946,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": null,
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": null,
+      "shippingAddress": null,
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-10T05:51:24.881Z",
+      "updatedAt": "2025-12-10T05:51:24.881Z",
+      "items": [
+        {
+          "id": "9c4b25c7-a922-45d6-bdd0-52898796cd24",
+          "orderId": "9db0df54-e383-48d2-b2b6-f04ac3c5876b",
+          "productId": "73714f60-803f-48c2-9f79-0e62983c8b0b",
+          "quantity": 4,
+          "priceUsd": 199
+        }
+      ]
+    },
+    {
+      "id": "be4f9016-1762-41e4-9b37-466299a86ef5",
+      "userId": null,
+      "guestEmail": "riantandriansyah92@gmail.com",
+      "totalUsd": 349,
+      "status": "SHIPPED",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": null,
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": null,
+      "shippingAddress": null,
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-10T05:57:24.888Z",
+      "updatedAt": "2025-12-11T05:40:34.199Z",
+      "items": [
+        {
+          "id": "aa7aac4f-2d80-4bf6-b972-ac74ee266b7b",
+          "orderId": "be4f9016-1762-41e4-9b37-466299a86ef5",
+          "productId": "73714f60-803f-48c2-9f79-0e62983c8b0b",
+          "quantity": 1,
+          "priceUsd": 199
+        }
+      ]
+    },
+    {
+      "id": "f170a57e-dab7-4dee-99d9-dc6c05a56d58",
+      "userId": null,
+      "guestEmail": "riantandriansyah92@gmail.com",
+      "totalUsd": 349,
+      "status": "SHIPPED",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": null,
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": null,
+      "shippingAddress": null,
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-10T06:24:47.133Z",
+      "updatedAt": "2025-12-11T05:40:35.461Z",
+      "items": [
+        {
+          "id": "3087742d-b4cd-43e2-9228-977912df9b79",
+          "orderId": "f170a57e-dab7-4dee-99d9-dc6c05a56d58",
+          "productId": "73714f60-803f-48c2-9f79-0e62983c8b0b",
+          "quantity": 1,
+          "priceUsd": 199
+        }
+      ]
+    },
+    {
+      "id": "e02f76d4-629a-401f-9548-6e09039e1600",
+      "userId": null,
+      "guestEmail": "yona@121221.com",
+      "totalUsd": 749,
+      "status": "SHIPPED",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": null,
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": null,
+      "shippingAddress": null,
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-11T04:34:32.623Z",
+      "updatedAt": "2025-12-11T05:40:36.365Z",
+      "items": [
+        {
+          "id": "34c68d0a-e4c3-4f7b-804b-fff790f1e227",
+          "orderId": "e02f76d4-629a-401f-9548-6e09039e1600",
+          "productId": "c4f5ef98-fe95-4017-b1ff-1a7b413ffc89",
+          "quantity": 1,
+          "priceUsd": 450
+        },
+        {
+          "id": "ef064257-a227-4bd9-9b3f-a3069a60a7f7",
+          "orderId": "e02f76d4-629a-401f-9548-6e09039e1600",
+          "productId": "1887ec6f-405d-4717-a9c5-8719bf4ff82c",
+          "quantity": 1,
+          "priceUsd": 149
+        }
+      ]
+    },
+    {
+      "id": "3239412b-e158-4c36-837b-00bd1c6e850c",
+      "userId": null,
+      "guestEmail": "ADA@aa.com",
+      "totalUsd": 548,
+      "status": "SHIPPED",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": null,
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": null,
+      "shippingAddress": null,
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-11T05:28:09.324Z",
+      "updatedAt": "2025-12-11T05:40:37.063Z",
+      "items": [
+        {
+          "id": "0ec1559b-2356-4831-91d7-f68dcd9f1b6a",
+          "orderId": "3239412b-e158-4c36-837b-00bd1c6e850c",
+          "productId": "73714f60-803f-48c2-9f79-0e62983c8b0b",
+          "quantity": 2,
+          "priceUsd": 199
+        }
+      ]
+    },
+    {
+      "id": "034d7fe3-110f-47cc-8138-55b63872eaf6",
+      "userId": null,
+      "guestEmail": "Tuti@mail.com",
+      "totalUsd": 548,
+      "status": "SHIPPED",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": null,
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": null,
+      "shippingAddress": null,
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-12T07:00:46.363Z",
+      "updatedAt": "2025-12-12T07:57:46.045Z",
+      "items": [
+        {
+          "id": "a5d6fda9-58c1-40d4-9062-963e6ef55253",
+          "orderId": "034d7fe3-110f-47cc-8138-55b63872eaf6",
+          "productId": "73714f60-803f-48c2-9f79-0e62983c8b0b",
+          "quantity": 2,
+          "priceUsd": 199
+        }
+      ]
+    },
+    {
+      "id": "f74d7932-963d-4dc0-b4de-b162f16fa322",
+      "userId": null,
+      "guestEmail": "C@g.com",
+      "totalUsd": 548,
+      "status": "SHIPPING_READY",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": null,
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": null,
+      "shippingAddress": null,
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-12T07:05:48.755Z",
+      "updatedAt": "2025-12-12T07:06:10.589Z",
+      "items": [
+        {
+          "id": "346f9eaf-d64a-43b8-a752-b0ff26e78cd5",
+          "orderId": "f74d7932-963d-4dc0-b4de-b162f16fa322",
+          "productId": "73714f60-803f-48c2-9f79-0e62983c8b0b",
+          "quantity": 2,
+          "priceUsd": 199
+        }
+      ]
+    },
+    {
+      "id": "decc80b8-f46c-4110-9fc3-bcade23bf6cb",
+      "userId": null,
+      "guestEmail": "Tuti@mail.com",
+      "totalUsd": 226,
+      "status": "SHIPPED",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": null,
+      "shippingAddress": null,
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-15T10:15:11.061Z",
+      "updatedAt": "2025-12-16T05:35:59.982Z",
+      "items": [
+        {
+          "id": "c3716568-9e4c-4340-81f1-fe29089fb5ba",
+          "orderId": "decc80b8-f46c-4110-9fc3-bcade23bf6cb",
+          "productId": "b3fdb518-42da-4ce1-96c5-509b07d23c77",
+          "quantity": 1,
+          "priceUsd": 76
+        }
+      ]
+    },
+    {
+      "id": "fd8c6d8b-f95e-4bca-8dd1-27daada9588c",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 226,
+      "status": "SHIPPED",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": "J&T",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "Midtrans",
+      "createdAt": "2025-12-15T10:30:28.230Z",
+      "updatedAt": "2025-12-15T10:30:58.827Z",
+      "items": [
+        {
+          "id": "44dc5b94-134d-4a29-938c-d516b10c6192",
+          "orderId": "fd8c6d8b-f95e-4bca-8dd1-27daada9588c",
+          "productId": "b3fdb518-42da-4ce1-96c5-509b07d23c77",
+          "quantity": 1,
+          "priceUsd": 76
+        }
+      ]
+    },
+    {
+      "id": "a6195fce-4f82-4345-8913-4fe98f887285",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 349,
+      "status": "SHIPPED",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": "J&T",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-16T05:59:25.133Z",
+      "updatedAt": "2025-12-16T06:11:42.641Z",
+      "items": [
+        {
+          "id": "a33e3136-8156-4bbd-9d5f-fa6bffc59280",
+          "orderId": "a6195fce-4f82-4345-8913-4fe98f887285",
+          "productId": "73714f60-803f-48c2-9f79-0e62983c8b0b",
+          "quantity": 1,
+          "priceUsd": 199
+        }
+      ]
+    },
+    {
+      "id": "5c0ab402-58d0-446b-ac78-52a62ead1a11",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 349,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-16T06:00:16.738Z",
+      "updatedAt": "2025-12-16T06:00:16.738Z",
+      "items": [
+        {
+          "id": "9409a39a-72a4-4508-9a99-e653167e31de",
+          "orderId": "5c0ab402-58d0-446b-ac78-52a62ead1a11",
+          "productId": "73714f60-803f-48c2-9f79-0e62983c8b0b",
+          "quantity": 1,
+          "priceUsd": 199
+        }
+      ]
+    },
+    {
+      "id": "cff0008b-a47c-4440-9c2e-e8fc1481ac83",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 1050,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "J&T",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-16T06:01:56.799Z",
+      "updatedAt": "2025-12-16T06:01:56.799Z",
+      "items": [
+        {
+          "id": "e3d79f6a-4056-4949-810a-6823a4472f83",
+          "orderId": "cff0008b-a47c-4440-9c2e-e8fc1481ac83",
+          "productId": "c4f5ef98-fe95-4017-b1ff-1a7b413ffc89",
+          "quantity": 2,
+          "priceUsd": 450
+        }
+      ]
+    },
+    {
+      "id": "ed36c8ae-47d7-4246-a84b-9d5e6ba9d690",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 299,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-16T06:06:41.303Z",
+      "updatedAt": "2025-12-16T06:06:41.303Z",
+      "items": [
+        {
+          "id": "6cf61eea-1453-4409-b95c-5cc4c72bfba5",
+          "orderId": "ed36c8ae-47d7-4246-a84b-9d5e6ba9d690",
+          "productId": "1887ec6f-405d-4717-a9c5-8719bf4ff82c",
+          "quantity": 1,
+          "priceUsd": 149
+        }
+      ]
+    },
+    {
+      "id": "64989739-a0a2-4929-88c0-6afe9e0d2cd4",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 600,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "QRIS",
+      "createdAt": "2025-12-16T06:13:57.352Z",
+      "updatedAt": "2025-12-16T06:13:57.352Z",
+      "items": [
+        {
+          "id": "801331da-4f85-4282-9d19-238ed97aae80",
+          "orderId": "64989739-a0a2-4929-88c0-6afe9e0d2cd4",
+          "productId": "c4f5ef98-fe95-4017-b1ff-1a7b413ffc89",
+          "quantity": 1,
+          "priceUsd": 450
+        }
+      ]
+    },
+    {
+      "id": "bc84a495-64f8-450b-9485-42e85680ab85",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 349,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "QRIS",
+      "createdAt": "2025-12-16T06:22:27.937Z",
+      "updatedAt": "2025-12-16T06:22:27.937Z",
+      "items": [
+        {
+          "id": "9571e11b-2192-4c89-9b49-d95bab7531c0",
+          "orderId": "bc84a495-64f8-450b-9485-42e85680ab85",
+          "productId": "73714f60-803f-48c2-9f79-0e62983c8b0b",
+          "quantity": 1,
+          "priceUsd": 199
+        }
+      ]
+    },
+    {
+      "id": "fbe64f3a-fd45-4173-8c6c-3541c754bbd6",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 600,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-16T06:33:22.107Z",
+      "updatedAt": "2025-12-16T06:33:22.107Z",
+      "items": [
+        {
+          "id": "6911b876-2a82-4996-b83d-304d1fc9ed78",
+          "orderId": "fbe64f3a-fd45-4173-8c6c-3541c754bbd6",
+          "productId": "c4f5ef98-fe95-4017-b1ff-1a7b413ffc89",
+          "quantity": 1,
+          "priceUsd": 450
+        }
+      ]
+    },
+    {
+      "id": "8594984a-5c81-493f-aaca-874575988bb3",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 226,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-16T06:34:59.918Z",
+      "updatedAt": "2025-12-16T06:34:59.918Z",
+      "items": [
+        {
+          "id": "2c2c6154-cbaa-4fc6-8141-e27accdd7b37",
+          "orderId": "8594984a-5c81-493f-aaca-874575988bb3",
+          "productId": "b3fdb518-42da-4ce1-96c5-509b07d23c77",
+          "quantity": 1,
+          "priceUsd": 76
+        }
+      ]
+    },
+    {
+      "id": "7458060e-8e03-4388-b426-23e1e52cf3b2",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 425,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-16T06:42:51.846Z",
+      "updatedAt": "2025-12-16T06:42:51.846Z",
+      "items": [
+        {
+          "id": "3e598eee-a01d-4425-b636-4d4bf1a0eb29",
+          "orderId": "7458060e-8e03-4388-b426-23e1e52cf3b2",
+          "productId": "b3fdb518-42da-4ce1-96c5-509b07d23c77",
+          "quantity": 1,
+          "priceUsd": 76
+        },
+        {
+          "id": "292e0140-87fc-4524-854b-de5fbc5c9b3d",
+          "orderId": "7458060e-8e03-4388-b426-23e1e52cf3b2",
+          "productId": "73714f60-803f-48c2-9f79-0e62983c8b0b",
+          "quantity": 1,
+          "priceUsd": 199
+        }
+      ]
+    },
+    {
+      "id": "30fb53e9-4dec-41e9-a15d-f345716aac96",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 299,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BNI",
+      "createdAt": "2025-12-16T06:49:43.841Z",
+      "updatedAt": "2025-12-16T06:49:43.841Z",
+      "items": [
+        {
+          "id": "b27b1caf-8794-4d25-bc09-03d44d8906aa",
+          "orderId": "30fb53e9-4dec-41e9-a15d-f345716aac96",
+          "productId": "1887ec6f-405d-4717-a9c5-8719bf4ff82c",
+          "quantity": 1,
+          "priceUsd": 149
+        }
+      ]
+    },
+    {
+      "id": "e2d25692-94d9-43b7-a655-e3e82cf23ab9",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 299,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "J&T",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-16T07:02:18.744Z",
+      "updatedAt": "2025-12-16T07:02:18.744Z",
+      "items": [
+        {
+          "id": "f6645d23-ddc0-4c8a-a9d7-c1e5fe389a01",
+          "orderId": "e2d25692-94d9-43b7-a655-e3e82cf23ab9",
+          "productId": "1887ec6f-405d-4717-a9c5-8719bf4ff82c",
+          "quantity": 1,
+          "priceUsd": 149
+        }
+      ]
+    },
+    {
+      "id": "b7af094d-b88b-4d32-878c-4e4fd15fecc8",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 299,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-16T07:02:46.711Z",
+      "updatedAt": "2025-12-16T07:02:46.711Z",
+      "items": [
+        {
+          "id": "16f8c8c7-5d3f-4372-bca5-34b101c0f574",
+          "orderId": "b7af094d-b88b-4d32-878c-4e4fd15fecc8",
+          "productId": "1887ec6f-405d-4717-a9c5-8719bf4ff82c",
+          "quantity": 1,
+          "priceUsd": 149
+        }
+      ]
+    },
+    {
+      "id": "ad7817ab-43c2-4d3c-adac-0728e1b69ab4",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 600,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-16T07:21:24.484Z",
+      "updatedAt": "2025-12-16T07:21:24.484Z",
+      "items": [
+        {
+          "id": "8bb6fb0a-a1e5-4b46-b6fe-ac186066a5dd",
+          "orderId": "ad7817ab-43c2-4d3c-adac-0728e1b69ab4",
+          "productId": "c4f5ef98-fe95-4017-b1ff-1a7b413ffc89",
+          "quantity": 1,
+          "priceUsd": 450
+        }
+      ]
+    },
+    {
+      "id": "0a422e31-68e5-4244-81d2-bac3d1399af4",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 600,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-16T07:31:02.888Z",
+      "updatedAt": "2025-12-16T07:31:02.888Z",
+      "items": [
+        {
+          "id": "8d1e2a9e-41a6-40a8-b8b5-8ac594a42c7e",
+          "orderId": "0a422e31-68e5-4244-81d2-bac3d1399af4",
+          "productId": "c4f5ef98-fe95-4017-b1ff-1a7b413ffc89",
+          "quantity": 1,
+          "priceUsd": 450
+        }
+      ]
+    },
+    {
+      "id": "15fa404f-95a3-464d-8c90-37aa59659f27",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 600,
+      "status": "SHIPPED",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-16T07:35:25.868Z",
+      "updatedAt": "2025-12-16T07:38:52.300Z",
+      "items": [
+        {
+          "id": "18ad0c38-b7da-4c52-9e49-db0ff9240c41",
+          "orderId": "15fa404f-95a3-464d-8c90-37aa59659f27",
+          "productId": "c4f5ef98-fe95-4017-b1ff-1a7b413ffc89",
+          "quantity": 1,
+          "priceUsd": 450
+        }
+      ]
+    },
+    {
+      "id": "43315ca3-5f5c-4462-8339-6099e152f102",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 600,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-16T07:51:42.648Z",
+      "updatedAt": "2025-12-16T07:51:42.648Z",
+      "items": [
+        {
+          "id": "43268b81-d580-40ba-92f1-36ab1dafb8da",
+          "orderId": "43315ca3-5f5c-4462-8339-6099e152f102",
+          "productId": "c4f5ef98-fe95-4017-b1ff-1a7b413ffc89",
+          "quantity": 1,
+          "priceUsd": 450
+        }
+      ]
+    },
+    {
+      "id": "25a37f72-40b1-4386-aa75-5b1e4f4118af",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 600,
+      "status": "SHIPPED",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": "J&T",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 0,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-17T07:24:40.366Z",
+      "updatedAt": "2025-12-17T07:24:57.840Z",
+      "items": [
+        {
+          "id": "b2a16e9e-56ba-4708-ad43-510e2e6ceaa3",
+          "orderId": "25a37f72-40b1-4386-aa75-5b1e4f4118af",
+          "productId": "c4f5ef98-fe95-4017-b1ff-1a7b413ffc89",
+          "quantity": 1,
+          "priceUsd": 450
+        }
+      ]
+    },
+    {
+      "id": "3b6c2525-9ae4-4020-af38-ef636716329f",
+      "userId": null,
+      "guestEmail": "yonayohanaamalia@gmail.com",
+      "totalUsd": 299,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "IDR",
+      "paymentTotal": 4784000,
+      "name": "yona",
+      "shippingAddress": "Bogor, West Java, Indonesia, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-17T07:38:33.441Z",
+      "updatedAt": "2025-12-17T07:38:33.441Z",
+      "items": [
+        {
+          "id": "5026406f-f30d-4012-afa6-faf8faf4aee1",
+          "orderId": "3b6c2525-9ae4-4020-af38-ef636716329f",
+          "productId": "1887ec6f-405d-4717-a9c5-8719bf4ff82c",
+          "quantity": 1,
+          "priceUsd": 0.0093125
+        }
+      ]
+    },
+    {
+      "id": "9e6d1030-89da-412d-879f-511fda6d6e8e",
+      "userId": null,
+      "guestEmail": "rere@g.com",
+      "totalUsd": 349,
+      "status": "PENDING",
+      "paymentStatus": "UNPAID",
+      "trackingNumber": null,
+      "shippingCourier": "J&T",
+      "phytoCertNumber": null,
+      "currency": "IDR",
+      "paymentTotal": 5584000,
+      "name": "rere",
+      "shippingAddress": "abbe, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-17T07:40:24.717Z",
+      "updatedAt": "2025-12-17T07:40:24.717Z",
+      "items": [
+        {
+          "id": "b3fd2359-26b2-4348-8bc1-61fa49c533ac",
+          "orderId": "9e6d1030-89da-412d-879f-511fda6d6e8e",
+          "productId": "73714f60-803f-48c2-9f79-0e62983c8b0b",
+          "quantity": 1,
+          "priceUsd": 0.0124375
+        }
+      ]
+    },
+    {
+      "id": "cb2178f6-c99d-47c2-8441-5efa4fdbf056",
+      "userId": null,
+      "guestEmail": "rere@g.com",
+      "totalUsd": 600,
+      "status": "SHIPPED",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": "JNE",
+      "phytoCertNumber": null,
+      "currency": "IDR",
+      "paymentTotal": 9600000,
+      "name": "rere",
+      "shippingAddress": "abbe, Indonesia",
+      "paymentMethod": "BCA",
+      "createdAt": "2025-12-17T07:47:05.235Z",
+      "updatedAt": "2025-12-17T07:48:18.581Z",
+      "items": [
+        {
+          "id": "a9ac30c3-872e-4676-b950-6ad5c770da0c",
+          "orderId": "cb2178f6-c99d-47c2-8441-5efa4fdbf056",
+          "productId": "c4f5ef98-fe95-4017-b1ff-1a7b413ffc89",
+          "quantity": 1,
+          "priceUsd": 450
+        }
+      ]
+    },
+    {
+      "id": "acc4f5d3-aeb4-4e4f-9139-94c3de12b4d4",
+      "userId": null,
+      "guestEmail": "rere@g.com",
+      "totalUsd": 299,
+      "status": "SHIPPED",
+      "paymentStatus": "PAID",
+      "trackingNumber": null,
+      "shippingCourier": "DHL Express",
+      "phytoCertNumber": null,
+      "currency": "USD",
+      "paymentTotal": 299,
+      "name": "rere",
+      "shippingAddress": "abbe, International",
+      "paymentMethod": "Amex",
+      "createdAt": "2025-12-17T08:14:13.063Z",
+      "updatedAt": "2025-12-17T08:14:29.167Z",
+      "items": [
+        {
+          "id": "87ea9214-2661-4a39-b5ee-d8064bbba7b2",
+          "orderId": "acc4f5d3-aeb4-4e4f-9139-94c3de12b4d4",
+          "productId": "1887ec6f-405d-4717-a9c5-8719bf4ff82c",
+          "quantity": 1,
+          "priceUsd": 149
+        }
+      ]
+    }
+  ]
+}

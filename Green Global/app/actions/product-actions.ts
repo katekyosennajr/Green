@@ -195,7 +195,8 @@ export async function updateProduct(id: string, formData: FormData): Promise<Sta
         // Critical: Revalidate the specific product page by Tag, since getProduct uses 'products' tag
         // or revalidatePath if we knew the slug, but tag is safer for global update
         // We need to import revalidateTag first
-        revalidateTag('products');
+        // revalidateTag('products'); // Causing build error
+        revalidatePath('/', 'layout');
 
         return { success: true, message: 'Product updated successfully' };
     } catch (error) {

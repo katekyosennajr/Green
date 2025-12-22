@@ -16,9 +16,15 @@ export function SiteFooter() {
                             Direct from Borneo to the World. We specialize in exporting rare Aroids with full phytosanitary compliance.
                         </p>
                         <div className="flex space-x-4 pt-2">
-                            <Instagram className="w-5 h-5 text-green-300 hover:text-white cursor-pointer" />
-                            <Facebook className="w-5 h-5 text-green-300 hover:text-white cursor-pointer" />
-                            <Linkedin className="w-5 h-5 text-green-300 hover:text-white cursor-pointer" />
+                            <a href="https://www.instagram.com/riantandrs/" target="_blank" rel="noopener noreferrer">
+                                <Instagram className="w-5 h-5 text-green-300 hover:text-white cursor-pointer transition-colors" />
+                            </a>
+                            <a href="https://www.facebook.com/riant.andriansyah/" target="_blank" rel="noopener noreferrer">
+                                <Facebook className="w-5 h-5 text-green-300 hover:text-white cursor-pointer transition-colors" />
+                            </a>
+                            <a href="https://www.linkedin.com/in/riant-andriansyah2929" target="_blank" rel="noopener noreferrer">
+                                <Linkedin className="w-5 h-5 text-green-300 hover:text-white cursor-pointer transition-colors" />
+                            </a>
                         </div>
                     </div>
 
