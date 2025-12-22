@@ -52,8 +52,8 @@ export const getProducts = async (filters: FilterOptions | string = {}) => {
                     const normalizedCategory = category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
                     if (normalizedCategory === 'Variegated') {
                         where.OR = [
-                            { name: { contains: 'Variegated', mode: 'insensitive' } },
-                            { description: { contains: 'Variegated', mode: 'insensitive' } } // Fixed: now using correct OR structure
+                            { name: { contains: 'Variegated' } },
+                            { description: { contains: 'Variegated' } }
                         ];
                     } else if (normalizedCategory !== 'All') {
                         where.category = normalizedCategory;
@@ -64,8 +64,8 @@ export const getProducts = async (filters: FilterOptions | string = {}) => {
                 if (query) {
                     const searchCondition = {
                         OR: [
-                            { name: { contains: query, mode: 'insensitive' } },
-                            { scientificName: { contains: query, mode: 'insensitive' } }
+                            { name: { contains: query } },
+                            { scientificName: { contains: query } }
                         ]
                     };
 

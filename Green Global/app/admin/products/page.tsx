@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { createProduct, deleteProduct } from '@/app/actions/product-actions';
-import { Trash2, Plus, ArrowLeft } from 'lucide-react';
+import { Trash2, Plus, ArrowLeft, Pencil } from 'lucide-react';
 import Link from 'next/link';
 import { StockEditor } from '@/components/admin/stock-editor';
 import { ProductForm } from '@/components/admin/product-form';
@@ -16,29 +16,41 @@ type Props = {
 export default async function AdminProductsPage(props: Props) {
     const searchParams = await props.searchParams;
     const isCreating = searchParams.new === 'true';
+    const editId = searchParams.edit as string;
+
+    // Fetch product if editing
+    let productToEdit = null;
+    if (editId) {
+        productToEdit = await prisma.product.findUnique({ where: { id: editId } });
+    }
+
     const products = await prisma.product.findMany({ orderBy: { createdAt: 'desc' } });
+
+    const isFormOpen = isCreating || !!productToEdit;
 
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <h1 className="text-2xl font-bold text-gray-800">Product Management</h1>
-                {!isCreating && (
+                {!isFormOpen && (
                     <Link href="/admin/products?new=true" className="bg-green-900 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-green-800 transition-colors">
                         <Plus className="w-4 h-4" /> Add Product
                     </Link>
                 )}
             </div>
 
-            {isCreating ? (
+            {isFormOpen ? (
                 <div className="bg-white p-8 rounded-xl shadow-sm border border-green-100 max-w-2xl">
                     <div className="mb-6 flex items-center gap-2">
                         <Link href="/admin/products" className="p-2 hover:bg-green-50 rounded-full">
                             <ArrowLeft className="w-5 h-5 text-green-600" />
                         </Link>
-                        <h2 className="font-bold text-xl text-green-900">Add New Plant</h2>
+                        <h2 className="font-bold text-xl text-green-900">
+                            {productToEdit ? 'Edit Plant' : 'Add New Plant'}
+                        </h2>
                     </div>
 
-                    <ProductForm />
+                    <ProductForm initialData={productToEdit || undefined} />
                 </div>
             ) : (
                 <div className="bg-white rounded-xl shadow-sm border border-green-100 overflow-hidden">
@@ -62,7 +74,13 @@ export default async function AdminProductsPage(props: Props) {
                                     <td className="px-6 py-4">
                                         <StockEditor productId={product.id} initialStock={product.stock} />
                                     </td>
-                                    <td className="px-6 py-4 text-right">
+                                    <td className="px-6 py-4 text-right space-x-2">
+                                        <Link
+                                            href={`/admin/products?edit=${product.id}`}
+                                            className="inline-block p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"
+                                        >
+                                            <Pencil className="w-4 h-4" />
+                                        </Link>
                                         <form action={deleteProduct.bind(null, product.id)} className="inline-block">
                                             <button className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
                                                 <Trash2 className="w-4 h-4" />

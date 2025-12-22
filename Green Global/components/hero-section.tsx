@@ -5,11 +5,14 @@ export function HeroSection() {
     return (
         <section className="relative w-full overflow-hidden bg-green-950 text-cream-50">
 
-            {/* Background dengan Overlay (gambar simulasi) */}
-            <div className="absolute inset-0 bg-green-900/40 z-0">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-950/90 via-green-950/40 to-transparent"></div>
-                {/* Placeholder simulasi, ganti dengan gambar asli nanti */}
-                <div className="w-full h-full bg-[url('https://images.unsplash.com/photo-1597843003057-7977a419c836?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay opacity-50"></div>
+            {/* Background Image & Gradient */}
+            <div className="absolute inset-0 z-0">
+                <div
+                    className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1614594975525-e45190c55d0b?q=80&w=2664&auto=format&fit=crop')] bg-cover bg-[center_60%]"
+                    aria-hidden="true"
+                />
+                {/* Gradient Overlay for Text Readability (Neutral/Black) */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
             </div>
 
             <div className="container relative z-10 mx-auto px-4 py-20 md:py-32 flex flex-col justify-center h-full">
