@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { Lock, ArrowRight, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 export default function LoginPage() {
     const router = useRouter();
     const [email, setEmail] = useState('');
