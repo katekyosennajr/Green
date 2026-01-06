@@ -2,6 +2,8 @@ import { PrismaClient } from '@prisma/client';
 import Link from 'next/link';
 import { User, ShoppingBag, CreditCard } from 'lucide-react';
 import { CustomerTable } from '@/components/admin/customer-table';
+import { ExportButton } from '@/components/admin/export-button';
+import { exportCustomersCSV } from '@/app/actions/export-actions';
 
 const prisma = new PrismaClient();
 
@@ -70,9 +72,11 @@ export default async function CustomerListPage() {
                     <h1 className="text-2xl font-serif font-bold text-green-900">Customer Insights</h1>
                     <p className="text-green-600">Customers derived from order history (Guests & Registered).</p>
                 </div>
-                <div className="bg-white px-4 py-2 rounded-lg border border-green-100 shadow-sm">
+                <div className="bg-white px-4 py-2 rounded-lg border border-green-100 shadow-sm flex items-center gap-4">
                     <span className="text-sm font-bold text-green-900">Total Unique: </span>
-                    <span className="text-gold-600 font-mono">{customers.length}</span>
+                    <span className="text-gold-600 font-mono text-lg font-bold">{customers.length}</span>
+                    <div className="h-6 w-px bg-green-200" />
+                    <ExportButton action={exportCustomersCSV} label="Export CSV" />
                 </div>
             </div>
 

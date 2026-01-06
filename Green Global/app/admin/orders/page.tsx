@@ -9,7 +9,8 @@ export const dynamic = 'force-dynamic';
 
 import { DateFilter } from '@/components/admin/date-filter';
 import { startOfDay, subDays, startOfWeek, startOfMonth, startOfYear, endOfDay } from 'date-fns';
-import { ExportOrdersButton } from '@/components/admin/export-orders-button';
+import { ExportButton } from '@/components/admin/export-button';
+import { exportOrdersCSV } from '@/app/actions/export-actions';
 
 type Props = {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>
@@ -40,7 +41,10 @@ export default async function AdminOrdersPage(props: Props) {
     const orders = await prisma.order.findMany({
         where,
         orderBy: { createdAt: 'desc' },
-        include: { items: true }
+        include: {
+            items: true,
+            user: true, // Add this to fetch user details
+        }
     });
 
     return (
@@ -52,11 +56,8 @@ export default async function AdminOrdersPage(props: Props) {
                 </div>
                 <div className="flex items-center gap-4">
                     <DateFilter />
-                    <ExportOrdersButton orders={orders.map(o => ({
-                        ...o,
-                        // Ensure optional fields are handled for strict typing if needed
-                        guestEmail: o.guestEmail || o.user?.email || null
-                    }))} />
+                    <DateFilter />
+                    <ExportButton action={exportOrdersCSV} label="Export CSV" />
                     <div className="bg-white px-4 py-2 rounded-lg border border-green-100 shadow-sm">
                         <span className="text-sm font-bold text-green-900">Revenue: </span>
                         <span className="text-gold-600 font-mono">
