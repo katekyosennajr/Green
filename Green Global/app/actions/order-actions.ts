@@ -1,9 +1,7 @@
 'use server';
 
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
-
-const prisma = new PrismaClient();
 
 interface CartItem {
     id: string;
@@ -108,5 +106,75 @@ export async function createOrder(prevState: unknown, formData: FormData) {
     } catch (error) {
         console.error("Order creation failed:", error);
         return { message: `Failed to create order: ${error instanceof Error ? error.message : 'Unknown error'}`, success: false };
+    }
+}
+
+export interface TrackingResult {
+    found: boolean;
+    order?: {
+        id: string;
+        status: string;
+        createdAt: Date;
+        shippingCourier: string | null;
+        trackingNumber: string | null;
+        phytoCertNumber: string | null;
+        items: {
+            quantity: number;
+            product: {
+                name: string;
+                images: string;
+            }
+        }[];
+    }
+}
+
+export async function trackOrder(orderId: string): Promise<TrackingResult> {
+    if (!orderId) return { found: false };
+
+    const id = orderId.trim();
+
+    try {
+        const order = await prisma.order.findUnique({
+            where: { id },
+            include: {
+                items: {
+                    include: {
+                        product: {
+                            select: {
+                                name: true,
+                                images: true
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        if (!order) {
+            return { found: false };
+        }
+
+        return {
+            found: true,
+            order: {
+                id: order.id,
+                status: order.status,
+                createdAt: order.createdAt,
+                shippingCourier: order.shippingCourier,
+                trackingNumber: order.trackingNumber,
+                phytoCertNumber: order.phytoCertNumber,
+                items: order.items.map(item => ({
+                    quantity: item.quantity,
+                    product: {
+                        name: item.product.name,
+                        images: item.product.images
+                    }
+                }))
+            }
+        };
+
+    } catch (error) {
+        console.error("Error tracking order:", error);
+        return { found: false };
     }
 }
