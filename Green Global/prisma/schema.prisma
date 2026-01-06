@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -16,7 +16,18 @@ model User {
   name      String?
   password  String
   role      String   @default("USER") // USER, ADMIN
+  
+  // Customer Profile Data
+  phone       String?
+  address     String? // Street address
+  city        String?
+  postalCode  String?
+  country     String?
+
   orders    Order[]
+  reviews   Review[]
+  wishlist  WishlistItem[]
+  articles  Article[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -38,6 +49,8 @@ model Product {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   orderItems      OrderItem[]
+  reviews         Review[]
+  wishlistedBy    WishlistItem[]
 }
 
 model Order {
@@ -75,8 +88,44 @@ model OrderItem {
   product   Product @relation(fields: [productId], references: [id])
 }
 
+model Review {
+  id        String   @id @default(uuid())
+  rating    Int      // 1-5
+  comment   String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model WishlistItem {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId]) // Prevent duplicates
+}
+
 model Content {
     id      String @id @default(uuid())
     key     String @unique
     value   String // Markdown or HTML content
+}
+
+model Article {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  excerpt     String
+  content     String   // HTML or Markdown
+  coverImage  String
+  published   Boolean  @default(true)
+  authorId    String?
+  author      User?    @relation(fields: [authorId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

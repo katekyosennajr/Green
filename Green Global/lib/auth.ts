@@ -1,12 +1,10 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-const prisma = new PrismaClient();
-
 export const authOptions: NextAuthOptions = {
-    adapter: PrismaAdapter(prisma),
+    // adapter: PrismaAdapter(prisma), // REMOVED: Not using DB sessions and Schema lacks Account/Session tables default
     session: {
         strategy: "jwt",
     },
@@ -56,12 +54,14 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, user }) {
             if (user) {
                 token.role = user.role;
+                token.id = user.id; // Store ID in token
             }
             return token;
         },
         async session({ session, token }) {
             if (session?.user) {
                 session.user.role = token.role;
+                session.user.id = token.id as string; // Store ID in session
             }
             return session;
         }
