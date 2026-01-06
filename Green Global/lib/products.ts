@@ -25,38 +25,88 @@ export const getFeaturedProducts = unstable_cache(
     { revalidate: 3600, tags: ['products'] }
 );
 
-export const getProducts = async (category?: string) => {
+export type SortOption = 'newest' | 'price_asc' | 'price_desc';
+
+export interface FilterOptions {
+    category?: string;
+    query?: string;
+    minPrice?: number;
+    maxPrice?: number;
+    sort?: SortOption;
+}
+
+export const getProducts = async (filters: FilterOptions | string = {}) => {
+    // Normalize input: if string, treat as category
+    const options: FilterOptions = typeof filters === 'string' ? { category: filters } : filters;
+    const { category, query, minPrice, maxPrice, sort = 'newest' } = options;
+
+    const cacheKey = `products-v6-${JSON.stringify(options)}`;
+
     const cachedFn = unstable_cache(
         async () => {
             try {
                 const where: any = { stock: { gt: 0 } };
 
+                // 1. Category Filter
                 if (category) {
-                    // Make robust: Capitalize first letter to match DB convention if user types lowercase
                     const normalizedCategory = category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
-
                     if (normalizedCategory === 'Variegated') {
                         where.OR = [
                             { name: { contains: 'Variegated' } },
                             { description: { contains: 'Variegated' } }
                         ];
-                    } else {
+                    } else if (normalizedCategory !== 'All') {
                         where.category = normalizedCategory;
                     }
                 }
 
+                // 2. Search Query (Name or Scientific Name)
+                if (query) {
+                    const searchCondition = {
+                        OR: [
+                            { name: { contains: query } },
+                            { scientificName: { contains: query } }
+                        ]
+                    };
+
+                    // Merge with existing OR if needed (complex)
+                    // Prisma AND is safer to combine multiple ORs
+                    if (where.OR) {
+                        where.AND = [
+                            { OR: where.OR },
+                            searchCondition
+                        ];
+                        delete where.OR; // Move existing OR to AND
+                    } else {
+                        Object.assign(where, searchCondition);
+                    }
+                }
+
+                // 3. Price Filter
+                if (minPrice !== undefined || maxPrice !== undefined) {
+                    where.priceUsd = {};
+                    if (minPrice !== undefined) where.priceUsd.gte = minPrice;
+                    if (maxPrice !== undefined) where.priceUsd.lte = maxPrice;
+                }
+
+                // 4. Sorting
+                let orderBy: any = { createdAt: 'desc' };
+                if (sort === 'price_asc') orderBy = { priceUsd: 'asc' };
+                if (sort === 'price_desc') orderBy = { priceUsd: 'desc' };
+
                 const products = await prisma.product.findMany({
-                    orderBy: { createdAt: 'desc' },
+                    orderBy,
                     where
                 });
-                console.log(`[DEBUG] Fetched ${products.length} products for category: ${category || 'ALL'}`);
+
+                console.log(`[DEBUG] Fetched ${products.length} products. Filters:`, options);
                 return products;
             } catch (error) {
                 console.error("Failed to fetch products:", error);
                 return [];
             }
         },
-        [`all-products-v5-${category || 'all'}`],
+        [cacheKey],
         { revalidate: 3600, tags: ['products'] }
     );
     return cachedFn();
