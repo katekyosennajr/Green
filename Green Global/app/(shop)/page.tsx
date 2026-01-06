@@ -1,5 +1,6 @@
 import { FeaturedProducts } from "@/components/featured-products";
 import { HeroSection } from "@/components/hero-section";
+import { TestimonialsSection } from "@/components/testimonials-section";
 import { Leaf, Package, Globe } from "lucide-react";
 
 export default function Home() {
@@ -7,6 +8,7 @@ export default function Home() {
     <>
       <HeroSection />
       <FeaturedProducts />
+      <TestimonialsSection />
 
       {/* Short About / Credibility Section (Extra) */}
       <section className="py-20 bg-green-900 text-cream-50">
