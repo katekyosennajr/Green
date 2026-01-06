@@ -7,6 +7,10 @@ import { ShieldCheck, Check } from 'lucide-react';
 import { AddToCartButton } from '@/components/add-to-cart-button';
 import { PriceDisplay } from '@/components/price-display';
 import { getProduct } from '@/lib/products';
+import { ReviewList } from '@/components/reviews/review-list';
+import { ReviewForm } from '@/components/reviews/review-form';
+import { WishlistButton } from '@/components/wishlist-button';
+import { checkWishlistStatus } from '@/app/actions/wishlist-actions';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const resolvedParams = await params;
@@ -108,9 +112,17 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                                 images: product.images as string,
                                 slug: product.slug
                             }} />
-                            <button className="w-full bg-transparent border-2 border-green-800 text-green-800 hover:bg-green-50 font-bold py-4 rounded-full transition-all">
-                                Request B2B / Wholesale Quote
-                            </button>
+
+                            <div className="flex gap-4">
+                                <WishlistButton
+                                    productId={product.id}
+                                    isWishlistedInitially={await checkWishlistStatus(product.id)}
+                                    className="w-14 h-14 border border-green-200"
+                                />
+                                <button className="flex-1 bg-transparent border-2 border-green-800 text-green-800 hover:bg-green-50 font-bold py-4 rounded-full transition-all text-sm uppercase tracking-wider">
+                                    Request Wholesale Quote
+                                </button>
+                            </div>
                         </div>
 
                         {/* Trust Points */}
@@ -134,6 +146,30 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                         </div>
 
                         <ExportInfoTabs />
+                    </div>
+                </div>
+            </div>
+
+            {/* Reviews Section */}
+            <div className="container mx-auto mt-24 mb-12 max-w-5xl border-t border-green-100 pt-16">
+                <h2 className="font-serif text-3xl font-bold text-green-900 mb-8 text-center">Customer Reviews</h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+                    {/* Review Form (Left Side - Sticky optional) */}
+                    <div className="md:col-span-4">
+                        <div className="sticky top-24">
+                            <h3 className="font-bold text-lg text-green-800 mb-4">Have you purchased this?</h3>
+                            <p className="text-sm text-green-600 mb-6">
+                                Share your experience with other collectors. Your feedback helps us improve our quality.
+                            </p>
+                            <ReviewForm productId={product.id} />
+                        </div>
+                    </div>
+
+                    {/* Review List (Right Side) */}
+                    <div className="md:col-span-8">
+                        <h3 className="font-bold text-lg text-green-800 mb-6 border-b border-green-100 pb-2">Latest Feedback</h3>
+                        <ReviewList productId={product.id} />
                     </div>
                 </div>
             </div>

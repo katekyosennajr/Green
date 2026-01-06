@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Green Global E-Commerce
+
+A premium e-commerce platform for exporting rare plants (Aroids) from Borneo. Built with modern web technologies focusing on performance, SEO, and user experience.
+
+## Technology Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: PostgreSQL (via Neon / Vercel Postgres)
+- **ORM**: Prisma
+- **Authentication**: NextAuth.js v4
+- **Payment**: Midtrans Snap API (Mocked for Dev)
+- **Email**: Nodemailer (Planned/Configured)
+
+## Prerequisites
+
+- Node.js 18+
+- PostgreSQL Database
+- NPM or Yarn
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd Green-Global
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Environment Setup**
+   Create a `.env` file in the root directory with the following variables:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```env
+   # Database
+   DATABASE_URL="postgresql://user:password@host:port/database"
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   # Authentication
+   NEXTAUTH_URL="http://localhost:3000"
+   NEXTAUTH_SECRET="your-secure-secret-key"
 
-## Learn More
+   # Payment (Midtrans)
+   MIDTRANS_SERVER_KEY="your-server-key"
+   MIDTRANS_CLIENT_KEY="your-client-key"
+   NEXT_PUBLIC_MIDTRANS_CLIENT_KEY="your-client-key"
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. **Database Setup**
+   Run the Prisma migrations to create the database schema:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   npx prisma migrate dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   (Optional) Seed the database with initial products and admin user:
+   ```bash
+   npx prisma db seed
+   ```
 
-## Deploy on Vercel
+5. **Run Development Server**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Key Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Customer Platform
+- **Catalog**: Advanced searching, filtering, and sorting for products.
+- **Cart & Checkout**: Full checkout flow with address management and payment integration.
+- **User Accounts**: Order history, profile management, and wishlist.
+- **Reviews**: Product reviews and community testimonials.
+- **Tracking**: Real-time order status tracking.
+
+### Admin Dashboard (`/admin`)
+- **Product Management**: Create, update, and delete products (CRUD coverage).
+- **Order Management**: View orders, update status (Shipped/Delivered), and payment verification.
+- **Data Export**: Export Orders and Customers to CSV format.
+- **Analytics**: Basic revenue and customer metrics.
+
+## Project Structure
+
+- `/app`: App Router pages and API routes.
+- `/components`: Reusable UI components.
+- `/lib`: Utility functions, Prisma client, and configuration.
+- `/prisma`: Database schema and migrations.
+- `/public`: Static assets (images).
+
+## Deployment
+
+The project is optimized for deployment on Vercel.
+Ensure all environment variables are correctly set in the deployment project settings.

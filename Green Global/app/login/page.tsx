@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { Lock, ArrowRight, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 export default function LoginPage() {
     const router = useRouter();
     const [email, setEmail] = useState('');
@@ -28,12 +30,7 @@ export default function LoginPage() {
             if (result?.error) {
                 setError('Invalid email or password');
             } else {
-                if (email === 'riant.andriansyah97@gmail.com') {
-                    // Force full reload for admin to ensure clean slate layout
-                    window.location.href = '/admin';
-                } else {
-                    window.location.href = '/';
-                }
+                window.location.href = '/';
             }
         } catch {
             setError('An error occurred. Please try again.');
@@ -43,13 +40,9 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-cream-50 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-
-            {/* Background Decor */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-                <div className="absolute top-0 left-0 w-96 h-96 bg-green-200/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-                <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gold-200/20 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
-            </div>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F7F9F6] to-[#E8ECE9] py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+            {/* Subtle Texture Overlay (Optional, keeps it clean/relaxed) */}
+            <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
 
             <div className="max-w-md w-full space-y-8 z-10 relative">
                 <div className="text-center">
@@ -59,10 +52,10 @@ export default function LoginPage() {
                         </span>
                     </Link>
                     <h2 className="font-serif text-3xl font-bold text-green-900">
-                        Welcome Back
+                        Customer Login
                     </h2>
                     <p className="mt-2 text-sm text-green-600">
-                        Sign in to access your dashboard
+                        Sign in to track orders and more
                     </p>
                 </div>
 
@@ -150,6 +143,15 @@ export default function LoginPage() {
                             </button>
                         </div>
                     </form>
+
+                    <div className="mt-6 text-center">
+                        <p className="text-sm text-green-600">
+                            Don't have an account?{' '}
+                            <Link href="/register" className="font-bold text-green-900 hover:text-gold-600 transition-colors">
+                                Create an account
+                            </Link>
+                        </p>
+                    </div>
                 </div>
 
                 <p className="mt-2 text-center text-xs text-green-500">
